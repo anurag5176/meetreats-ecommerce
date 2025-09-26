@@ -6,19 +6,19 @@ interface ProductsGridProps {
     category?: string
     sort?: string
     search?: string
-  }
+  } | undefined
 }
 
 export async function ProductsGrid({ searchParams }: ProductsGridProps) {
   let products = await getAllProducts()
 
   // Filter by category
-  if (searchParams.category && searchParams.category !== "all") {
+  if (searchParams?.category && searchParams.category !== "all") {
     products = await getProductsByCategory(searchParams.category)
   }
 
   // Filter by search
-  if (searchParams.search) {
+  if (searchParams?.search) {
     const searchTerm = searchParams.search.toLowerCase()
     products = products.filter(
       (product) =>
@@ -27,7 +27,7 @@ export async function ProductsGrid({ searchParams }: ProductsGridProps) {
   }
 
   // Sort products
-  if (searchParams.sort) {
+  if (searchParams?.sort) {
     switch (searchParams.sort) {
       case "price-asc":
         products.sort((a, b) => a.priceINR - b.priceINR)
@@ -46,6 +46,13 @@ export async function ProductsGrid({ searchParams }: ProductsGridProps) {
           return a.name.localeCompare(b.name)
         })
     }
+  } else {
+    // Default to featured first, then by name
+    products.sort((a, b) => {
+      if (a.featured && !b.featured) return -1
+      if (!a.featured && b.featured) return 1
+      return a.name.localeCompare(b.name)
+    })
   }
 
   if (products.length === 0) {

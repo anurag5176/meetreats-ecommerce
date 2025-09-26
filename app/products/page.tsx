@@ -13,7 +13,7 @@ interface SearchParams {
 export default function ProductsPage({
   searchParams,
 }: {
-  searchParams: SearchParams
+  searchParams: SearchParams | undefined
 }) {
   return (
     <div className="min-h-screen bg-soft-cream">
