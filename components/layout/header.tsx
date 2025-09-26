@@ -25,20 +25,20 @@ export function Header() {
   return (
     <header className="sticky top-0 z-50 w-full border-b border-champagne bg-deep-plum shadow-soft">
       <div className="container mx-auto px-3 sm:px-6 lg:px-8">
-        <div className="flex h-16 sm:h-20 items-center">
-          {/* Logo */}
-          <Link href="/" className="flex items-center flex-shrink-0 -ml-2 sm:-ml-4">
+        <div className="flex h-20 sm:h-24 items-center justify-between">
+          {/* Logo - Left */}
+          <Link href="/" className="flex items-center flex-shrink-0">
             <Image
               src="/meetreatslogo.png"
               alt="MeeTreats Logo"
-              width={80}
-              height={60}
-              className="h-12 sm:h-16 md:h-20"
+              width={140}
+              height={100}
+              className="h-20 sm:h-24 md:h-28"
             />
           </Link>
 
           {/* Desktop Navigation - Centered */}
-          <nav className="hidden md:flex items-center space-x-6 lg:space-x-8 flex-1 justify-center -ml-4 lg:-ml-8">
+          <nav className="hidden md:flex items-center space-x-4 lg:space-x-6 flex-1 justify-center">
             {navigation.map((item) => (
               <Link
                 key={item.name}
@@ -50,8 +50,9 @@ export function Header() {
             ))}
           </nav>
 
-          {/* Actions */}
-          <div className="flex items-center space-x-2 sm:space-x-4 flex-shrink-0">
+          {/* Right side - Menu and Cart spread out */}
+          <div className="flex items-center space-x-6 sm:space-x-8 flex-shrink-0">
+            {/* Cart Icon */}
             <Button variant="ghost" size="sm" asChild className="hover:bg-royal-gold/20 text-warm-taupe hover:text-royal-gold p-2 sm:p-3">
               <Link href="/cart" className="relative">
                 <ShoppingCart className="h-4 w-4 sm:h-5 sm:w-5" />
