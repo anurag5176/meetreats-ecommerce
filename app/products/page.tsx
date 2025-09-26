@@ -23,7 +23,9 @@ export default function ProductsPage({
         <div className="flex flex-col lg:flex-row gap-12">
           <aside className="lg:w-80 flex-shrink-0">
             <div className="sticky top-24">
-              <ProductsFilters />
+              <Suspense fallback={<div className="card-elegant p-6"><div className="animate-pulse">Loading filters...</div></div>}>
+                <ProductsFilters />
+              </Suspense>
             </div>
           </aside>
 
