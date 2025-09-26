@@ -1,0 +1,107 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --font-sans: var(--font-inter);
+  --font-serif: var(--font-fraunces);
+  --font-display: var(--font-canela);
+
+  /* Primary Colors */
+  --deep-plum: #3B2638;
+  --espresso: #3A2A22;
+  
+  /* Accent Colors */
+  --royal-gold: #D4AF37;
+  --champagne: #F0E6D8;
+  
+  /* Support Colors */
+  --warm-taupe: #B08A6A;
+  --soft-cream: #FAF7F2;
+  --charcoal: #1E1E1E;
+
+  /* Base Colors - Sophisticated Theme */
+  --background: #FAF7F2;
+  --foreground: #1E1E1E;
+  --muted: #B08A6A;
+  --muted-foreground: #8B7355;
+  --popover: #FAF7F2;
+  --popover-foreground: #1E1E1E;
+  --card: #FAF7F2;
+  --card-foreground: #1E1E1E;
+  --border: #F0E6D8;
+  --input: #FFFFFF;
+  --primary: #3B2638;
+  --primary-foreground: #D4AF37;
+  --secondary: #F0E6D8;
+  --secondary-foreground: #3B2638;
+  --accent: #B08A6A;
+  --accent-foreground: #FAF7F2;
+  --destructive: #DC2626;
+  --destructive-foreground: #FAF7F2;
+  --ring: #D4AF37;
+
+  /* Radius */
+  --radius-sm: 6px;
+  --radius: 10px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+  --radius-2xl: 32px;
+}
+
+* {
+  border-color: hsl(var(--border));
+}
+
+body {
+  color: hsl(var(--foreground));
+  background: hsl(var(--background));
+  font-feature-settings: "rlig" 1, "calt" 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Smooth transitions */
+.transition-smooth {
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Festival mode accents */
+.festival-accent {
+  border-color: hsl(var(--gold-400));
+  box-shadow: 0 0 0 1px hsl(var(--gold-400) / 0.2);
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #F0E6D8;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #B08A6A;
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #8B7355;
+}
+
+/* Satisfy font class */
+.satisfy-regular {
+  font-family: "Satisfy", cursive;
+  font-weight: 700;
+  font-style: normal;
+}

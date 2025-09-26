@@ -1,0 +1,21 @@
+{
+  "name": "MeeTreats - Premium Clean-Label Snacks",
+  "short_name": "MeeTreats",
+  "description": "Premium activated almonds and dehydrated fruits with complete transparency",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#FAF7F2",
+  "theme_color": "#3B2638",
+  "icons": [
+    {
+      "src": "/meetreatslogo.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/meetreatslogo.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
