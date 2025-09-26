@@ -17,13 +17,13 @@ export default function ProductsPage({
 }) {
   return (
     <div className="min-h-screen bg-soft-cream">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <div className="container mx-auto px-3 sm:px-6 lg:px-8 py-6 sm:py-8 lg:py-12">
         <ProductsHeader />
 
-        <div className="flex flex-col lg:flex-row gap-12">
+        <div className="flex flex-col lg:flex-row gap-6 sm:gap-8 lg:gap-12">
           <aside className="lg:w-80 flex-shrink-0">
-            <div className="sticky top-24">
-              <Suspense fallback={<div className="card-elegant p-6"><div className="animate-pulse">Loading filters...</div></div>}>
+            <div className="sticky top-20 sm:top-24">
+              <Suspense fallback={<div className="card-elegant p-4 sm:p-6"><div className="animate-pulse">Loading filters...</div></div>}>
                 <ProductsFilters />
               </Suspense>
             </div>

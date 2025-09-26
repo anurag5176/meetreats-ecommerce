@@ -43,7 +43,7 @@ export function ProductCard({ product, showPricePer100g = false }: ProductCardPr
         </Link>
 
         {product.badges.length > 0 && (
-          <div className="absolute top-3 left-3 flex flex-wrap gap-2">
+          <div className="absolute top-2 left-2 sm:top-3 sm:left-3 flex flex-wrap gap-1 sm:gap-2">
             {product.badges.slice(0, 2).map((badge) => (
               <Badge key={badge} variant="secondary" className="text-xs bg-deep-plum text-royal-gold font-semibold shadow-medium">
                 {badge}
@@ -53,31 +53,31 @@ export function ProductCard({ product, showPricePer100g = false }: ProductCardPr
         )}
       </div>
 
-      <CardContent className="p-6">
+      <CardContent className="p-4 sm:p-6">
         <Link href={`/products/${product.slug}`}>
-          <h3 className="satisfy-regular text-charcoal mb-3 group-hover:text-deep-plum transition-colors line-clamp-2 text-xl">
+          <h3 className="satisfy-regular text-charcoal mb-2 sm:mb-3 group-hover:text-deep-plum transition-colors line-clamp-2 text-lg sm:text-xl">
             {product.name}
           </h3>
         </Link>
 
-        <p className="text-sm text-warm-taupe mb-4 line-clamp-2 leading-relaxed">{product.shortDescription}</p>
+        <p className="text-xs sm:text-sm text-warm-taupe mb-3 sm:mb-4 line-clamp-2 leading-relaxed">{product.shortDescription}</p>
 
-        <div className="flex items-center justify-between mb-4">
+        <div className="flex items-center justify-between mb-3 sm:mb-4">
           <div>
-            <span className="text-xl font-bold text-charcoal font-space-grotesk">₹{product.priceINR}</span>
-            <span className="text-sm text-warm-taupe ml-2">({product.weightGrams}g)</span>
+            <span className="text-lg sm:text-xl font-bold text-charcoal font-space-grotesk">₹{product.priceINR}</span>
+            <span className="text-xs sm:text-sm text-warm-taupe ml-1 sm:ml-2">({product.weightGrams}g)</span>
             {showPricePer100g && <div className="text-xs text-warm-taupe mt-1 font-space-grotesk">₹{pricePer100g}/100g</div>}
           </div>
         </div>
       </CardContent>
 
-      <CardFooter className="p-6 pt-0">
+      <CardFooter className="p-4 sm:p-6 pt-0">
         <Button
           onClick={handleAddToCart}
-          className="w-full btn-plum"
+          className="w-full btn-plum text-sm sm:text-base py-2 sm:py-3"
           disabled={!product.inStock}
         >
-          <ShoppingCart className="h-4 w-4 mr-2" />
+          <ShoppingCart className="h-3 w-3 sm:h-4 sm:w-4 mr-2" />
           {product.inStock ? "Add to Cart" : "Out of Stock"}
         </Button>
       </CardFooter>

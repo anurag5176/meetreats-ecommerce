@@ -45,13 +45,13 @@ export function ProductsFilters() {
   }
 
   return (
-    <div className="card-elegant p-6">
-      <div className="space-y-8">
-        <h3 className="font-semibold text-charcoal text-xl mb-6">Filters</h3>
+    <div className="card-elegant p-4 sm:p-6">
+      <div className="space-y-6 sm:space-y-8">
+        <h3 className="font-semibold text-charcoal text-lg sm:text-xl mb-4 sm:mb-6">Filters</h3>
 
         {/* Search */}
-        <form onSubmit={handleSearch} className="mb-8">
-          <Label htmlFor="search" className="text-sm font-medium mb-3 block text-charcoal">
+        <form onSubmit={handleSearch} className="mb-6 sm:mb-8">
+          <Label htmlFor="search" className="text-sm font-medium mb-2 sm:mb-3 block text-charcoal">
             Search Products
           </Label>
           <div className="flex gap-2">
@@ -60,22 +60,22 @@ export function ProductsFilters() {
               name="search"
               placeholder="Search products..."
               defaultValue={searchParams.get("search") || ""}
-              className="flex-1 border-champagne focus:border-royal-gold"
+              className="flex-1 border-champagne focus:border-royal-gold text-sm sm:text-base"
             />
-            <Button type="submit" size="sm" variant="outline" className="border-royal-gold text-royal-gold hover:bg-royal-gold hover:text-deep-plum">
+            <Button type="submit" size="sm" variant="outline" className="border-royal-gold text-royal-gold hover:bg-royal-gold hover:text-deep-plum px-3">
               <Search className="h-4 w-4" />
             </Button>
           </div>
         </form>
 
         {/* Category Filter */}
-        <div className="mb-8">
-          <Label className="text-sm font-medium mb-3 block text-charcoal">Category</Label>
+        <div className="mb-6 sm:mb-8">
+          <Label className="text-sm font-medium mb-2 sm:mb-3 block text-charcoal">Category</Label>
           <Select
             value={searchParams.get("category") || "all"}
             onValueChange={(value) => updateFilters("category", value)}
           >
-            <SelectTrigger className="border-champagne focus:border-royal-gold">
+            <SelectTrigger className="border-champagne focus:border-royal-gold text-sm sm:text-base">
               <SelectValue />
             </SelectTrigger>
             <SelectContent>
@@ -90,12 +90,12 @@ export function ProductsFilters() {
 
         {/* Sort */}
         <div>
-          <Label className="text-sm font-medium mb-3 block text-charcoal">Sort By</Label>
+          <Label className="text-sm font-medium mb-2 sm:mb-3 block text-charcoal">Sort By</Label>
           <Select
             value={searchParams.get("sort") || "featured"}
             onValueChange={(value) => updateFilters("sort", value)}
           >
-            <SelectTrigger className="border-champagne focus:border-royal-gold">
+            <SelectTrigger className="border-champagne focus:border-royal-gold text-sm sm:text-base">
               <SelectValue />
             </SelectTrigger>
             <SelectContent>
