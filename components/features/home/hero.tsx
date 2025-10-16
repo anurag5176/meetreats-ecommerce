@@ -41,8 +41,7 @@ export function Hero() {
                 size="lg"
                 variant="outline"
                 asChild
-                className="border border-charcoal/30 text-charcoal hover:text-soft-cream hover:bg-dark-chocolate transition-all duration-500 px-8 sm:px-10 py-4 sm:py-5 text-base sm:text-lg w-full sm:w-auto font-light tracking-wider rounded-none bg-transparent hover:scale-105 montserrat"
-                style={{backgroundColor: 'transparent'}}
+                className="border border-charcoal/30 text-charcoal hover:text-soft-cream hover:bg-[#2a1914] transition-all duration-500 px-8 sm:px-10 py-4 sm:py-5 text-base sm:text-lg w-full sm:w-auto font-light tracking-wider rounded-none bg-transparent hover:scale-105 montserrat"
               >
                 <Link href="/corporate">
                   Corporate Gifting
