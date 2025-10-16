@@ -3,17 +3,20 @@
 import { useState } from "react"
 import Link from "next/link"
 import Image from "next/image"
+import { usePathname } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
 import { Badge } from "@/components/ui/badge"
 import { Menu, ShoppingCart } from "lucide-react"
 import { useCart } from "@/lib/hooks/use-cart"
 
-const navigation = [
+const leftNavigation = [
   { name: "PRODUCTS", href: "/products" },
   { name: "CORPORATE GIFTING", href: "/corporate" },
-  { name: "ABOUT", href: "/about" },
-  { name: "TRACK ORDER", href: "/track" },
+]
+
+const rightNavigation = [
+  { name: "ABOUT US", href: "/about" },
   { name: "CONTACT", href: "/contact" },
 ]
 
@@ -21,39 +24,65 @@ export function Header() {
   const [isOpen, setIsOpen] = useState(false)
   const { items } = useCart()
   const itemCount = items.reduce((sum, item) => sum + item.quantity, 0)
+  const pathname = usePathname()
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-champagne bg-deep-plum shadow-soft">
+    <header className="sticky top-0 z-50 w-full border-b border-royal-gold/20" style={{backgroundColor: '#2a1914'}}>
       <div className="container mx-auto px-3 sm:px-6 lg:px-8">
         <div className="flex h-20 sm:h-24 items-center justify-between">
-          {/* Logo - Left */}
-          <Link href="/" className="flex items-center flex-shrink-0">
+          {/* Left Navigation */}
+          <nav className="hidden md:flex items-center space-x-10 lg:space-x-16 flex-1 justify-end pr-20">
+            {leftNavigation.map((item) => {
+              const isActive = pathname === item.href
+              return (
+                <Link
+                  key={item.name}
+                  href={item.href}
+                  className={`montserrat text-sm lg:text-base font-medium transition-colors duration-300 uppercase tracking-wider relative ${
+                    isActive 
+                      ? 'text-royal-gold border-b-2 border-royal-gold pb-1' 
+                      : 'text-white hover:text-royal-gold'
+                  }`}
+                >
+                  {item.name}
+                </Link>
+              )
+            })}
+          </nav>
+
+          {/* Logo - Center */}
+          <Link href="/" className="flex items-center flex-shrink-0 -mt-4">
             <Image
               src="/meetreatslogo.png"
               alt="MeeTreats Logo"
-              width={140}
+              width={160}
               height={100}
-              className="h-20 sm:h-24 md:h-28"
             />
           </Link>
 
-          {/* Desktop Navigation - Centered */}
-          <nav className="hidden md:flex items-center space-x-4 lg:space-x-6 flex-1 justify-center">
-            {navigation.map((item) => (
-              <Link
-                key={item.name}
-                href={item.href}
-                className="text-xs lg:text-sm font-semibold text-warm-taupe hover:text-royal-gold transition-colors duration-200 uppercase tracking-wide"
-              >
-                {item.name}
-              </Link>
-            ))}
+          {/* Right Navigation */}
+          <nav className="hidden md:flex items-center space-x-10 lg:space-x-16 flex-1 justify-start pl-20">
+            {rightNavigation.map((item) => {
+              const isActive = pathname === item.href
+              return (
+                <Link
+                  key={item.name}
+                  href={item.href}
+                  className={`montserrat text-sm lg:text-base font-medium transition-colors duration-300 uppercase tracking-wider relative ${
+                    isActive 
+                      ? 'text-royal-gold border-b-2 border-royal-gold pb-1' 
+                      : 'text-white hover:text-royal-gold'
+                  }`}
+                >
+                  {item.name}
+                </Link>
+              )
+            })}
           </nav>
 
-          {/* Right side - Menu and Cart spread out */}
-          <div className="flex items-center space-x-6 sm:space-x-8 flex-shrink-0">
-            {/* Cart Icon */}
-            <Button variant="ghost" size="sm" asChild className="hover:bg-royal-gold/20 text-warm-taupe hover:text-royal-gold p-2 sm:p-3">
+          {/* Cart Icon - Far Right */}
+          <div className="flex items-center">
+            <Button variant="ghost" size="sm" asChild className="hover:bg-royal-gold/20 text-white hover:text-royal-gold p-2 sm:p-3">
               <Link href="/cart" className="relative">
                 <ShoppingCart className="h-4 w-4 sm:h-5 sm:w-5" />
                 {itemCount > 0 && (
@@ -85,11 +114,21 @@ export function Header() {
                   />
                 </div>
                 <nav className="flex flex-col space-y-4 sm:space-y-6">
-                  {navigation.map((item) => (
+                  {leftNavigation.map((item) => (
                     <Link
                       key={item.name}
                       href={item.href}
-                      className="text-base sm:text-lg font-semibold text-warm-taupe hover:text-royal-gold transition-colors duration-200 uppercase tracking-wide"
+                      className="montserrat text-base sm:text-lg font-semibold text-warm-taupe hover:text-royal-gold transition-colors duration-200 uppercase tracking-wide"
+                      onClick={() => setIsOpen(false)}
+                    >
+                      {item.name}
+                    </Link>
+                  ))}
+                  {rightNavigation.map((item) => (
+                    <Link
+                      key={item.name}
+                      href={item.href}
+                      className="montserrat text-base sm:text-lg font-semibold text-warm-taupe hover:text-royal-gold transition-colors duration-200 uppercase tracking-wide"
                       onClick={() => setIsOpen(false)}
                     >
                       {item.name}

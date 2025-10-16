@@ -3,39 +3,49 @@ import { Shield, Leaf, FlaskConical, Award } from "lucide-react"
 const values = [
   {
     icon: Leaf,
-    text: "Dehydration, not destruction",
+    text: "Low-Temperature Crafting",
   },
   {
     icon: Shield,
-    text: "No preservatives",
+    text: "Zero Preservatives",
   },
   {
     icon: FlaskConical,
-    text: "Lab-tested quality",
+    text: "Lab-Verified Purity",
   },
   {
     icon: Award,
-    text: "Minimal sugar",
+    text: "Thoughtfully Low Sugar",
   },
 ]
 
 export function ValuePropStrip() {
   return (
-    <section className="border-y border-champagne bg-soft-cream">
-      <div className="container mx-auto px-3 sm:px-6 lg:px-8 py-6 sm:py-8 lg:py-10">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 md:gap-10">
+    <section className="bg-soft-cream py-16 sm:py-20">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 sm:gap-12 md:gap-16">
           {values.map((value, index) => (
             <div
               key={index}
-              className="rounded-xl border border-[#E9DEC9] bg-[#FFF9F0] px-3 sm:px-4 py-4 sm:py-5 text-center group transition-all duration-200 hover:-translate-y-1"
+              className="text-center group"
             >
-              <div className="p-2 sm:p-3 rounded-xl bg-royal-gold/10 group-hover:bg-royal-gold/20 transition-colors duration-300 border border-royal-gold/20 mx-auto mb-2 sm:mb-3 w-fit">
-                <value.icon className="h-5 w-5 sm:h-6 sm:w-6 text-royal-gold flex-shrink-0" />
+              {/* Floating icon - no container, just the icon */}
+              <div className="mb-6">
+                <value.icon className="h-8 w-8 sm:h-10 sm:w-10 text-royal-gold mx-auto group-hover:scale-110 transition-transform duration-300" />
               </div>
-              <span className="text-xs sm:text-[14px] leading-[18px] sm:leading-[22px] font-semibold text-charcoal">{value.text}</span>
+              
+              {/* Feature text in deep chocolate brown */}
+              <span className="montserrat text-sm sm:text-base font-medium text-dark-chocolate uppercase tracking-wider">
+                {value.text}
+              </span>
             </div>
           ))}
         </div>
+      </div>
+      
+      {/* Thin divider line */}
+      <div className="mt-16 sm:mt-20">
+        <div className="h-px bg-gradient-to-r from-transparent via-dark-chocolate/30 to-transparent"></div>
       </div>
     </section>
   )

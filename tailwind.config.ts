@@ -49,11 +49,12 @@ const config: Config = {
         // Sophisticated brand colors
         'deep-plum': '#3B2638',
         'espresso': '#3A2A22',
-        'royal-gold': '#D4AF37',
+        'royal-gold': '#C7A055',
         'champagne': '#F0E6D8',
         'warm-taupe': '#B08A6A',
         'soft-cream': '#FAF7F2',
         'charcoal': '#1E1E1E',
+        'dark-chocolate': '#3d1f14',
         chart: {
           '1': 'hsl(var(--chart-1))',
           '2': 'hsl(var(--chart-2))',

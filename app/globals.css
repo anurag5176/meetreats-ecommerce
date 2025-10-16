@@ -6,19 +6,21 @@
   --font-sans: var(--font-inter);
   --font-serif: var(--font-fraunces);
   --font-display: var(--font-canela);
+  --font-playfair: var(--font-playfair);
 
   /* Primary Colors */
   --deep-plum: #3B2638;
   --espresso: #3A2A22;
   
   /* Accent Colors */
-  --royal-gold: #D4AF37;
+  --royal-gold: #C7A055;
   --champagne: #F0E6D8;
   
   /* Support Colors */
   --warm-taupe: #B08A6A;
   --soft-cream: #FAF7F2;
   --charcoal: #1E1E1E;
+  --dark-chocolate: #3d1f14;
 
   /* Base Colors - Sophisticated Theme */
   --background: #FAF7F2;
@@ -104,4 +106,109 @@ body {
   font-family: "Satisfy", cursive;
   font-weight: 700;
   font-style: normal;
+}
+
+/* Playfair Display font class */
+.playfair-display {
+  font-family: var(--font-playfair), serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+/* Inter font class */
+.inter {
+  font-family: var(--font-inter), sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+/* Montserrat font class - Clean, geometric sans-serif */
+.montserrat {
+  font-family: var(--font-montserrat), sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  letter-spacing: 0.02em;
+}
+
+/* Cormorant Garamond font class - High-contrast serif */
+.cormorant-garamond {
+  font-family: var(--font-cormorant), serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+/* Luxury Animations */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideInFromLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideInFromRight {
+  from {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Animation classes */
+.animate-fade-in-up {
+  animation: fadeInUp 0.8s ease-out forwards;
+}
+
+.animate-fade-in {
+  animation: fadeIn 1s ease-out forwards;
+}
+
+.animate-slide-in-left {
+  animation: slideInFromLeft 0.6s ease-out forwards;
+}
+
+.animate-slide-in-right {
+  animation: slideInFromRight 0.6s ease-out forwards;
+}
+
+/* Delayed animations for staggered effect */
+.animate-delay-200 {
+  animation-delay: 0.2s;
+  opacity: 0;
+}
+
+.animate-delay-400 {
+  animation-delay: 0.4s;
+  opacity: 0;
+}
+
+.animate-delay-600 {
+  animation-delay: 0.6s;
+  opacity: 0;
 }

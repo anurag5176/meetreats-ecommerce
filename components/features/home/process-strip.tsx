@@ -33,45 +33,59 @@ export function ProcessStrip() {
   const [selectedStep, setSelectedStep] = useState<(typeof processSteps)[0] | null>(null)
 
   return (
-    <section className="py-16 bg-background">
+    <section className="pb-20 sm:pb-24 bg-soft-cream">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-12">
-          <h2 className="satisfy-regular text-4xl text-foreground mb-4">Our Process</h2>
-          <p className="text-muted-foreground max-w-2xl mx-auto">
-            Three simple steps that make all the difference in taste, nutrition, and quality.
-          </p>
+        {/* Headline with high-contrast serif font */}
+        <div className="text-center mb-16 sm:mb-20">
+          <div className="montserrat text-base sm:text-lg text-royal-gold mb-4 font-medium tracking-wider uppercase text-center">
+            THIS IS HOW WE CRAFT YOUR TREATS
+          </div>
+          <h2 className="cormorant-garamond text-4xl sm:text-5xl md:text-6xl lg:text-7xl text-dark-chocolate font-semibold tracking-tight text-center" style={{fontWeight: '700', textShadow: '0 1px 2px rgba(0,0,0,0.1)'}}>
+            THE ART OF ACTIVATION
+          </h2>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto">
+        {/* Process steps with proper alignment */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-16 max-w-6xl mx-auto">
           {processSteps.map((step, index) => (
             <div key={index} className="text-center group">
-              <div className="relative mb-6">
-                <div className="w-16 h-16 mx-auto bg-gradient-to-br from-gold-600 to-gold-400 rounded-full flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
-                  <step.icon className="h-8 w-8 text-brand-900" />
+              {/* Icon and title */}
+              <div className="mb-8">
+                <div className="mb-6">
+                  <step.icon className="h-10 w-10 sm:h-12 sm:w-12 text-royal-gold mx-auto group-hover:scale-110 transition-transform duration-300" />
                 </div>
-                {index < processSteps.length - 1 && (
-                  <div className="hidden md:block absolute top-8 left-full w-full h-0.5 bg-gradient-to-r from-gold-400 to-transparent -translate-x-8" />
-                )}
+                
+                {/* Title in deep chocolate brown, sans-serif, all caps */}
+                <h3 className="montserrat font-medium text-lg sm:text-xl text-dark-chocolate uppercase tracking-wider mb-4">
+                  {step.title}
+                </h3>
               </div>
 
-              <h3 className="font-semibold text-lg text-foreground mb-2">{step.title}</h3>
-              <p className="text-sm text-muted-foreground mb-4">{step.description}</p>
+              {/* Description */}
+              <p className="montserrat text-sm sm:text-base text-dark-chocolate/80 mb-6 font-light leading-relaxed">
+                {step.description}
+              </p>
 
+              {/* Exclusive Learn More CTA */}
               <Dialog>
                 <DialogTrigger asChild>
-                  <Button variant="ghost" size="sm" className="text-gold-400 hover:text-gold-300">
-                    <Info className="h-4 w-4 mr-1" />
-                    Learn more
-                  </Button>
+                  <button className="group/btn montserrat text-sm font-medium text-dark-chocolate hover:text-royal-gold transition-colors duration-300 flex items-center justify-center mx-auto">
+                    <span className="border-b border-transparent group-hover/btn:border-royal-gold/50 transition-all duration-300">
+                      Learn More
+                    </span>
+                    <svg className="ml-2 h-3 w-3 text-royal-gold opacity-0 group-hover/btn:opacity-100 transition-opacity duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                    </svg>
+                  </button>
                 </DialogTrigger>
-                <DialogContent>
+                <DialogContent className="max-w-2xl">
                   <DialogHeader>
-                    <DialogTitle className="flex items-center">
-                      <step.icon className="h-6 w-6 text-gold-400 mr-2" />
+                    <DialogTitle className="flex items-center cormorant-garamond text-xl text-dark-chocolate">
+                      <step.icon className="h-6 w-6 text-royal-gold mr-3" />
                       {step.title}
                     </DialogTitle>
                   </DialogHeader>
-                  <p className="text-muted-foreground">{step.detail}</p>
+                  <p className="montserrat text-dark-chocolate/80 leading-relaxed">{step.detail}</p>
                 </DialogContent>
               </Dialog>
             </div>

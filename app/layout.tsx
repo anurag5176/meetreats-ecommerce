@@ -1,6 +1,6 @@
 import type React from "react"
 import type { Metadata } from "next"
-import { Inter, Fraunces, Space_Grotesk } from "next/font/google"
+import { Inter, Fraunces, Space_Grotesk, Playfair_Display, Montserrat, Cormorant_Garamond } from "next/font/google"
 import "./globals.css"
 import { Toaster } from "@/components/ui/toaster"
 import { Header } from "@/components/layout/header"
@@ -21,6 +21,25 @@ const fraunces = Fraunces({
 const spaceGrotesk = Space_Grotesk({
   subsets: ["latin"],
   variable: "--font-space-grotesk",
+  display: "swap",
+})
+
+const playfairDisplay = Playfair_Display({
+  subsets: ["latin"],
+  variable: "--font-playfair",
+  display: "swap",
+})
+
+const montserrat = Montserrat({
+  subsets: ["latin"],
+  variable: "--font-montserrat",
+  display: "swap",
+})
+
+const cormorantGaramond = Cormorant_Garamond({
+  subsets: ["latin"],
+  variable: "--font-cormorant",
+  weight: ["300", "400", "500", "600", "700"],
   display: "swap",
 })
 
@@ -65,7 +84,7 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" className={`${inter.variable} ${fraunces.variable} ${spaceGrotesk.variable} antialiased`}>
+    <html lang="en" className={`${inter.variable} ${fraunces.variable} ${spaceGrotesk.variable} ${playfairDisplay.variable} ${montserrat.variable} ${cormorantGaramond.variable} antialiased`}>
       <body className="min-h-screen bg-soft-cream font-sans text-charcoal">
         <Header />
         <main className="flex-1">{children}</main>
