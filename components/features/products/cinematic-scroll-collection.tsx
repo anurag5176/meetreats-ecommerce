@@ -80,6 +80,14 @@ export function CinematicScrollCollection() {
   const [currentProduct, setCurrentProduct] = useState(0);
   const [filteredProducts, setFilteredProducts] = useState(products);
   const { items, addItem, updateQuantity } = useCart();
+  const [activeFilter, setActiveFilter] = useState("all");
+
+  const filters = [
+    { label: "All Products", value: "all" },
+    { label: "Activated Almonds", value: "activated-almonds" },
+    { label: "Dehydrated Fruits", value: "dehydrated-fruits" },
+    { label: "Cashews", value: "cashews" },
+  ];
 
   useEffect(() => {
     const handleScroll = () => {
@@ -95,39 +103,37 @@ export function CinematicScrollCollection() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, [filteredProducts]);
 
-  const handleFilterChange = (value: string) => {
-    if (value === "all") {
+  useEffect(() => {
+    if (activeFilter === "all") {
       setFilteredProducts(products);
     } else {
       setFilteredProducts(
         products.filter(
           (product) =>
-            product.category.toLowerCase().replace(/\s+/g, "-") === value
+            product.category.toLowerCase().replace(/\s+/g, "-") === activeFilter
         )
       );
     }
-  };
+  }, [activeFilter]);
 
   return (
     <div className="relative min-h-screen bg-soft-cream">
-      {/* Mobile Sort Dropdown */}
+      {/* Mobile Chip Filters */}
       <div className="lg:hidden px-4 py-6">
-        <div className="max-w-sm mx-auto">
-          <Select onValueChange={handleFilterChange}>
-            <SelectTrigger className="w-full rounded-xl bg-[#FFF9F0] text-[#3B2F2F] border border-[#C6A760] shadow-md focus:ring-2 focus:ring-[#C6A760]/50 transition-all duration-300">
-              <SelectValue placeholder="All Products" />
-            </SelectTrigger>
-            <SelectContent className="rounded-xl bg-[#FFF9F0] text-[#3B2F2F] shadow-md">
-              <SelectItem value="all">All Products</SelectItem>
-              <SelectItem value="activated-almonds">
-                Activated Almonds
-              </SelectItem>
-              <SelectItem value="dehydrated-fruits">
-                Dehydrated Fruits
-              </SelectItem>
-              <SelectItem value="cashews">Cashews</SelectItem>
-            </SelectContent>
-          </Select>
+        <div className="flex flex-wrap gap-2 justify-center">
+          {filters.map((filter) => (
+            <button
+              key={filter.value}
+              onClick={() => setActiveFilter(filter.value)}
+              className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
+                activeFilter === filter.value
+                  ? "bg-dark-chocolate text-soft-cream shadow-lg"
+                  : "bg-[#FFF9F0] text-[#3B2F2F] border border-[#C6A760] hover:bg-[#C6A760]/20"
+              }`}
+            >
+              {filter.label}
+            </button>
+          ))}
         </div>
       </div>
 
