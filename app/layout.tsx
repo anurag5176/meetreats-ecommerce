@@ -34,6 +34,7 @@ const montserrat = Montserrat({
   subsets: ["latin"],
   variable: "--font-montserrat",
   display: "swap",
+  weight: ["300", "400", "500", "600", "700", "800", "900"],
 })
 
 const cormorantGaramond = Cormorant_Garamond({
@@ -85,7 +86,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={`${inter.variable} ${fraunces.variable} ${spaceGrotesk.variable} ${playfairDisplay.variable} ${montserrat.variable} ${cormorantGaramond.variable} antialiased`}>
-      <body className="min-h-screen bg-soft-cream font-sans text-charcoal">
+      <body className="min-h-screen bg-soft-cream text-charcoal" style={{fontFamily: 'var(--font-montserrat), sans-serif'}}>
         <Header />
         <main className="flex-1">{children}</main>
         <Footer />

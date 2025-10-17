@@ -4,7 +4,8 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { useCart } from "@/lib/hooks/use-cart";
-import { ArrowRight, ShoppingCart } from "lucide-react";
+import { useScrollReveal } from "@/lib/hooks/use-scroll-reveal";
+import { ArrowRight, ShoppingCart, Instagram } from "lucide-react";
 import {
   Select,
   SelectContent,
@@ -138,8 +139,12 @@ export function CinematicScrollCollection() {
       </div>
 
       {/* Products */}
-      {filteredProducts.map((product, index) => (
+      {filteredProducts.map((product, index) => {
+        const [productRef, isProductVisible] = useScrollReveal(0.1, 0);
+        
+        return (
         <section
+          ref={productRef}
           key={product.id}
           id={`product-${index}`}
           className="min-h-screen flex flex-col lg:flex-row items-center"
@@ -167,79 +172,101 @@ export function CinematicScrollCollection() {
             <div className="flex-1 flex flex-col justify-center p-6 sm:p-8 bg-soft-cream">
               <div className="max-w-md mx-auto text-center">
                 {/* Category */}
-                <div className="montserrat text-sm text-royal-gold uppercase tracking-wider font-medium mb-4">
+                <div className={`montserrat text-sm text-royal-gold uppercase tracking-wider font-medium mb-4 transition-all duration-700 ease-out ${
+                  isProductVisible 
+                    ? 'opacity-100 translate-x-0' 
+                    : 'opacity-0 translate-x-8'
+                }`} style={{transitionDelay: '0.1s'}}>
                   {product.category}
                 </div>
 
                 {/* Product Name */}
-                <h2 className="cormorant-garamond text-3xl sm:text-4xl text-dark-chocolate font-semibold mb-4 leading-tight">
+                <h2 className={`cormorant-garamond text-3xl sm:text-4xl text-dark-chocolate font-semibold mb-4 leading-tight transition-all duration-700 ease-out ${
+                  isProductVisible 
+                    ? 'opacity-100 translate-x-0' 
+                    : 'opacity-0 translate-x-8'
+                }`} style={{transitionDelay: '0.2s'}}>
                   {product.name}
                 </h2>
 
                 {/* Description */}
-                <p className="montserrat text-sm sm:text-base text-charcoal/80 mb-4 leading-relaxed font-light">
+                <p className={`montserrat text-sm sm:text-base text-charcoal/80 mb-4 leading-relaxed font-light transition-all duration-700 ease-out ${
+                  isProductVisible 
+                    ? 'opacity-100 translate-x-0' 
+                    : 'opacity-0 translate-x-8'
+                }`} style={{transitionDelay: '0.3s'}}>
                   {product.description}
                 </p>
 
                 {/* Price */}
-                <div className="montserrat text-xl font-semibold text-dark-chocolate mb-6">
+                <div className={`montserrat text-xl font-semibold text-dark-chocolate mb-6 transition-all duration-700 ease-out ${
+                  isProductVisible 
+                    ? 'opacity-100 translate-x-0' 
+                    : 'opacity-0 translate-x-8'
+                }`} style={{transitionDelay: '0.4s'}}>
                   {product.price}
                 </div>
 
                 {/* CTA / Quantity Controls - Mobile */}
-                {(() => {
-                  const cartItem = items.find(
-                    (i) => i.id === String(product.id)
-                  );
-                  const quantity = cartItem?.quantity || 0;
-                  const priceNumber = Number(
-                    String(product.price).replace(/[^\d]/g, "")
-                  );
-                  return quantity > 0 ? (
-                    <div className="flex items-center justify-center gap-4 w-full">
-                      <Button
-                        size="lg"
-                        variant="outline"
-                        className="border border-dark-chocolate/30 text-dark-chocolate hover:bg-dark-chocolate hover:text-soft-cream rounded-none px-4"
-                        onClick={() =>
-                          updateQuantity(String(product.id), quantity - 1)
-                        }
-                      >
-                        -
-                      </Button>
-                      <div className="montserrat text-lg min-w-[3ch] text-center">
-                        {quantity}
+                <div className={`transition-all duration-700 ease-out ${
+                  isProductVisible 
+                    ? 'opacity-100 translate-x-0' 
+                    : 'opacity-0 translate-x-8'
+                }`} style={{transitionDelay: '0.5s'}}>
+                  {(() => {
+                    const cartItem = items.find(
+                      (i) => i.id === String(product.id)
+                    );
+                    const quantity = cartItem?.quantity || 0;
+                    const priceNumber = Number(
+                      String(product.price).replace(/[^\d]/g, "")
+                    );
+                    return quantity > 0 ? (
+                      <div className="flex items-center justify-center gap-4 w-full">
+                        <Button
+                          size="lg"
+                          variant="outline"
+                          className="border border-dark-chocolate/30 text-dark-chocolate hover:bg-dark-chocolate hover:text-soft-cream rounded-none px-4"
+                          onClick={() =>
+                            updateQuantity(String(product.id), quantity - 1)
+                          }
+                        >
+                          -
+                        </Button>
+                        <div className="montserrat text-lg min-w-[3ch] text-center">
+                          {quantity}
+                        </div>
+                        <Button
+                          size="lg"
+                          className="bg-dark-chocolate text-soft-cream hover:bg-dark-chocolate/90 rounded-none px-4"
+                          onClick={() =>
+                            updateQuantity(String(product.id), quantity + 1)
+                          }
+                        >
+                          +
+                        </Button>
                       </div>
+                    ) : (
                       <Button
                         size="lg"
-                        className="bg-dark-chocolate text-soft-cream hover:bg-dark-chocolate/90 rounded-none px-4"
+                        className="montserrat w-full bg-dark-chocolate text-soft-cream hover:bg-dark-chocolate/90 hover:scale-105 transition-all duration-500 py-4 text-base font-light tracking-wider border-0 rounded-none"
                         onClick={() =>
-                          updateQuantity(String(product.id), quantity + 1)
+                          addItem({
+                            id: String(product.id),
+                            name: product.name,
+                            price: priceNumber,
+                            weight: 0,
+                            image: product.image,
+                            slug: product.slug,
+                          })
                         }
                       >
-                        +
+                        <ShoppingCart className="mr-3 h-5 w-5" />
+                        Add to Cart
                       </Button>
-                    </div>
-                  ) : (
-                    <Button
-                      size="lg"
-                      className="montserrat w-full bg-dark-chocolate text-soft-cream hover:bg-dark-chocolate/90 hover:scale-105 transition-all duration-500 py-4 text-base font-light tracking-wider border-0 rounded-none"
-                      onClick={() =>
-                        addItem({
-                          id: String(product.id),
-                          name: product.name,
-                          price: priceNumber,
-                          weight: 0,
-                          image: product.image,
-                          slug: product.slug,
-                        })
-                      }
-                    >
-                      <ShoppingCart className="mr-3 h-5 w-5" />
-                      Add to Cart
-                    </Button>
-                  );
-                })()}
+                    );
+                  })()}
+                </div>
               </div>
             </div>
 
@@ -273,27 +300,47 @@ export function CinematicScrollCollection() {
             <div className="w-2/5 flex items-center justify-center px-8 lg:px-12">
               <div className="max-w-md space-y-8">
                 {/* Category */}
-                <div className="montserrat text-sm text-royal-gold uppercase tracking-wider font-medium">
+                <div className={`montserrat text-sm text-royal-gold uppercase tracking-wider font-medium transition-all duration-700 ease-out ${
+                  isProductVisible 
+                    ? 'opacity-100 translate-x-0' 
+                    : 'opacity-0 translate-x-8'
+                }`} style={{transitionDelay: '0.1s'}}>
                   {product.category}
                 </div>
 
                 {/* Product Name */}
-                <h2 className="cormorant-garamond text-4xl lg:text-5xl xl:text-6xl text-dark-chocolate font-semibold leading-tight">
+                <h2 className={`cormorant-garamond text-4xl lg:text-5xl xl:text-6xl text-dark-chocolate font-semibold leading-tight transition-all duration-700 ease-out ${
+                  isProductVisible 
+                    ? 'opacity-100 translate-x-0' 
+                    : 'opacity-0 translate-x-8'
+                }`} style={{transitionDelay: '0.2s'}}>
                   {product.name}
                 </h2>
 
                 {/* Description */}
-                <p className="montserrat text-lg text-charcoal/80 leading-relaxed font-light">
+                <p className={`montserrat text-lg text-charcoal/80 leading-relaxed font-light transition-all duration-700 ease-out ${
+                  isProductVisible 
+                    ? 'opacity-100 translate-x-0' 
+                    : 'opacity-0 translate-x-8'
+                }`} style={{transitionDelay: '0.3s'}}>
                   {product.description}
                 </p>
 
                 {/* Price */}
-                <div className="montserrat text-2xl font-semibold text-dark-chocolate">
+                <div className={`montserrat text-2xl font-semibold text-dark-chocolate transition-all duration-700 ease-out ${
+                  isProductVisible 
+                    ? 'opacity-100 translate-x-0' 
+                    : 'opacity-0 translate-x-8'
+                }`} style={{transitionDelay: '0.4s'}}>
                   {product.price}
                 </div>
 
                 {/* CTA / Quantity Controls + View Details */}
-                <div className="flex flex-col sm:flex-row gap-4">
+                <div className={`flex flex-col sm:flex-row gap-4 transition-all duration-700 ease-out ${
+                  isProductVisible 
+                    ? 'opacity-100 translate-x-0' 
+                    : 'opacity-0 translate-x-8'
+                }`} style={{transitionDelay: '0.5s'}}>
                   {(() => {
                     const cartItem = items.find(
                       (i) => i.id === String(product.id)
@@ -364,47 +411,45 @@ export function CinematicScrollCollection() {
             </div>
           </div>
         </section>
-      ))}
+        );
+      })}
 
       {/* Instagram Follow Section */}
       <section className="pb-20 sm:pb-24 lg:pb-32 bg-soft-cream">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           {/* Aesthetic line before content */}
-          <div className="mb-16 sm:mb-20 hidden sm:block">
+          <div className="mb-16 sm:mb-20">
             <div className="h-px bg-gradient-to-r from-transparent via-royal-gold/60 to-transparent"></div>
           </div>
-
+          
           <div className="max-w-4xl mx-auto text-center">
             {/* Two-line headline with color contrast */}
             <div className="mb-8">
               <div className="montserrat text-base sm:text-lg text-dark-chocolate mb-4 font-medium tracking-wider uppercase">
                 FOLLOW US ON
               </div>
-              <h2
-                className="cormorant-garamond text-5xl sm:text-6xl md:text-7xl lg:text-8xl text-royal-gold font-semibold tracking-tight"
-                style={{
-                  fontWeight: "700",
-                  textShadow: "0 2px 4px rgba(0,0,0,0.2)",
-                }}
-              >
+              <h2 className="cormorant-garamond text-4xl sm:text-5xl md:text-6xl lg:text-7xl text-royal-gold font-semibold tracking-tight" style={{fontWeight: '700', textShadow: '0 1px 2px rgba(0,0,0,0.1)'}}>
                 INSTAGRAM
               </h2>
             </div>
-
-            {/* Subtext */}
-            <p className="montserrat text-lg sm:text-xl text-dark-chocolate/70 mb-16 font-light leading-relaxed">
+            
+            {/* Optional subtext */}
+            <p className="montserrat text-sm sm:text-base text-dark-chocolate/70 mb-12 font-light tracking-wide">
               FOR DAILY INSPIRATION AND EXCLUSIVE UPDATES
             </p>
-
-            {/* Instagram Call-to-Action */}
+            
+            {/* Instagram CTA */}
             <div className="text-center">
-              <Link
-                href="https://instagram.com"
-                className="text-dark-chocolate font-medium hover:text-royal-gold transition-colors"
+              <Link 
+                href="https://instagram.com/meetreatsofficial"
                 target="_blank"
                 rel="noopener noreferrer"
+                className="group inline-flex items-center justify-center px-8 py-4 border border-dark-chocolate/20 hover:border-royal-gold/50 transition-all duration-300 rounded-lg montserrat"
               >
-                @MeeTreatsOfficial
+                <Instagram className="h-6 w-6 text-dark-chocolate group-hover:text-royal-gold transition-colors duration-300 mr-3" />
+                <span className="montserrat text-base font-medium text-dark-chocolate group-hover:text-royal-gold transition-colors duration-300">
+                  @MeeTreatsOfficial
+                </span>
               </Link>
             </div>
           </div>

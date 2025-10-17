@@ -136,7 +136,7 @@ export function ProductCard({
             <div className="space-y-2">
               {/* Product Title */}
               <Link href={`/products/${product.slug}`}>
-                <h3 className="cormorant-garamond text-lg font-semibold text-dark-chocolate group-hover:text-[#CBB27A] transition-colors duration-500 ease-in-out line-clamp-2">
+                <h3 className="montserrat text-lg font-semibold text-dark-chocolate group-hover:text-[#CBB27A] transition-colors duration-500 ease-in-out line-clamp-2">
                   {product.name}
                 </h3>
               </Link>
@@ -147,7 +147,7 @@ export function ProductCard({
                   ₹
                 </span>
                 <span
-                  className="cormorant-garamond text-xl font-bold group-hover:text-[#B89A4F] transition-colors duration-500 ease-in-out"
+                  className="montserrat text-xl font-bold group-hover:text-[#B89A4F] transition-colors duration-500 ease-in-out"
                   style={{ color: "#2a1914" }}
                 >
                   {product.priceINR}

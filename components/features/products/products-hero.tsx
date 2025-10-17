@@ -1,6 +1,8 @@
 export function ProductsHero() {
   return (
-    <section className="relative overflow-hidden h-screen flex items-center" style={{backgroundImage: 'url(/herobackground.png)', backgroundSize: 'cover', backgroundPosition: 'center', backgroundRepeat: 'no-repeat'}}>
+    <section className="relative overflow-hidden h-screen flex items-center -mt-20 pt-20" style={{backgroundImage: 'url("/products%20hero.png")', backgroundSize: 'cover', backgroundPosition: 'center', backgroundRepeat: 'no-repeat'}}>
+      {/* Dark overlay */}
+      <div className="absolute inset-0 bg-black/5"></div>
       
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 w-full relative z-10">
         <div className="text-left max-w-4xl">
@@ -22,8 +24,8 @@ export function ProductsHero() {
               Discover a world of activated nuts and dehydrated fruits, each meticulously crafted for exceptional taste and well-being.
             </p>
 
-            {/* Scroll Indicator */}
-            <div className="animate-fade-in-up animate-delay-600">
+            {/* Scroll Indicator - Matching homepage style */}
+            <div className="animate-fade-in-up animate-delay-400">
               <div className="flex flex-col items-start space-y-2">
                 <span className="montserrat text-sm text-dark-chocolate/60 uppercase tracking-wider font-medium">
                   Scroll to Explore

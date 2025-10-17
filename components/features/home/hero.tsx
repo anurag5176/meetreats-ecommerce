@@ -5,6 +5,8 @@ import { ArrowRight } from "lucide-react"
 export function Hero() {
   return (
     <section className="relative overflow-hidden h-screen flex items-center -mt-20 pt-20" style={{backgroundImage: 'url(/herobackground.png)', backgroundSize: 'cover', backgroundPosition: 'center', backgroundRepeat: 'no-repeat'}}>
+      {/* Dark overlay */}
+      <div className="absolute inset-0 bg-black/5"></div>
       
       <div className="container mx-auto px-4 sm:px-6 lg:px-8 w-full relative z-10">
         <div className="text-left max-w-4xl">
@@ -12,14 +14,14 @@ export function Hero() {
           <div className="h-[60vh] flex flex-col justify-center">
             
             {/* Main Headline - Reduced size, left aligned */}
-            <h1 className="cormorant-garamond text-[36px] sm:text-[48px] md:text-[56px] lg:text-[64px] text-dark-chocolate mb-6 sm:mb-8 text-balance leading-[0.9] font-light tracking-tight animate-fade-in-up">
+            <h1 className="cormorant-garamond text-[36px] sm:text-[48px] md:text-[56px] lg:text-[64px] text-dark-chocolate mb-6 sm:mb-8 text-balance leading-[0.9] font-light tracking-tight animate-fade-in-up hover:scale-105 transition-transform duration-700 ease-out cursor-default">
               The India's Finest Treats.
               <br />
-              <span className="text-royal-gold/90">Crafted for You.</span>
+              <span className="text-royal-gold/90 hover:text-royal-gold transition-colors duration-500">Crafted for You.</span>
             </h1>
 
             {/* Sub-headline - Reduced size, left aligned */}
-            <p className="montserrat text-[16px] sm:text-[18px] leading-[28px] sm:leading-[32px] text-charcoal/70 mb-8 sm:mb-10 max-w-xl text-pretty font-light tracking-wide animate-fade-in-up animate-delay-200">
+            <p className="montserrat text-[16px] sm:text-[18px] leading-[28px] sm:leading-[32px] text-charcoal/70 mb-8 sm:mb-10 max-w-xl text-pretty font-light tracking-wide animate-fade-in-up animate-delay-200 hover:text-charcoal/90 transition-colors duration-500 cursor-default">
               Artisanal activated nuts and dehydrated fruits, crafted with clean ingredients and thoughtful care.
             </p>
 

@@ -106,7 +106,7 @@ export function ProductDetail({ product }: ProductDetailProps) {
                 <button
                   key={index}
                   onClick={() => setSelectedImage(index)}
-                  className={`relative w-20 h-20 rounded-lg overflow-hidden border-2 ${
+                  className={`relative w-20 h-20 rounded-lg overflow-hidden border-2 transition-all duration-300 hover:scale-105 ${
                     selectedImage === index
                       ? "border-gold-400"
                       : "border-border hover:border-royal-gold/60"
@@ -128,12 +128,12 @@ export function ProductDetail({ product }: ProductDetailProps) {
         <div className="space-y-6">
           <div>
             <h1
-              className="cormorant-garamond text-4xl text-dark-chocolate font-semibold mb-2"
+              className="montserrat text-4xl text-dark-chocolate font-semibold mb-2"
               style={{ fontWeight: 700 }}
             >
               {product.name}
             </h1>
-            <p className="cormorant-garamond text-lg text-charcoal/90 font">
+            <p className="montserrat text-lg text-charcoal/90 font">
               {product.shortDescription}
             </p>
             <div className="mt-4 h-px bg-gradient-to-r from-transparent via-royal-gold/40 to-transparent" />
@@ -157,7 +157,7 @@ export function ProductDetail({ product }: ProductDetailProps) {
           {/* Price */}
           <div className="space-y-2">
             <div className="flex items-center space-x-4">
-              <span className="text-3xl font-bold text-dark-chocolate">
+              <span className="montserrat text-3xl font-bold text-dark-chocolate">
                 ₹{product.priceINR}
               </span>
               <span className="text-charcoal/70 border border-royal-gold/30 rounded-full px-2 py-0.5 montserrat text-sm">
@@ -169,13 +169,13 @@ export function ProductDetail({ product }: ProductDetailProps) {
               variant="ghost"
               size="sm"
               onClick={() => setShowPricePer100g(!showPricePer100g)}
-              className="text-gold-400 hover:text-gold-300 p-0 h-auto"
+              className="text-gold-400 hover:text-gold-300 p-0 h-auto montserrat"
             >
               {showPricePer100g ? "Show pack price" : "Show price per 100g"}
             </Button>
 
             {showPricePer100g && (
-              <p className="text-lg text-charcoal/70">
+              <p className="montserrat text-lg text-charcoal/70">
                 ₹{pricePer100g} per 100g
               </p>
             )}
@@ -198,7 +198,7 @@ export function ProductDetail({ product }: ProductDetailProps) {
                 </div>
                 <Button
                   size="lg"
-                  className="bg-dark-chocolate text-soft-cream hover:bg-dark-chocolate/90 rounded-none px-5"
+                  className="bg-dark-chocolate text-soft-cream hover:bg-dark-chocolate/90 rounded-none px-5 hover:scale-105 transition-transform duration-300"
                   onClick={() => updateQuantity(product.id, quantity + 1)}
                 >
                   +
@@ -207,7 +207,7 @@ export function ProductDetail({ product }: ProductDetailProps) {
             ) : (
               <Button
                 onClick={handleAddToCart}
-                className="flex-1 bg-dark-chocolate text-soft-cream hover:bg-dark-chocolate/90 montserrat font-medium rounded-none"
+                className="flex-1 bg-dark-chocolate text-soft-cream hover:bg-dark-chocolate/90 montserrat font-medium rounded-none hover:scale-105 transition-transform duration-300"
                 size="lg"
                 disabled={!product.inStock}
               >
@@ -224,7 +224,7 @@ export function ProductDetail({ product }: ProductDetailProps) {
 
           {/* Pairs Well With */}
           <div>
-            <h3 className="font-semibold text-foreground mb-3">
+            <h3 className="montserrat font-semibold text-foreground mb-3">
               Pairs well with:
             </h3>
             <div className="flex space-x-2">
@@ -233,7 +233,7 @@ export function ProductDetail({ product }: ProductDetailProps) {
                   key={option.name}
                   variant="outline"
                   size="sm"
-                  className="flex items-center space-x-1 bg-transparent border-royal-gold/30 hover:bg-royal-gold/10"
+                  className="flex items-center space-x-1 bg-transparent border-royal-gold/30 hover:bg-royal-gold/10 hover:scale-105 transition-all duration-300"
                   onClick={() => {
                     toast({
                       title: "Great choice!",
@@ -254,14 +254,14 @@ export function ProductDetail({ product }: ProductDetailProps) {
           {/* Corporate Link */}
           <Card className="bg-gold-600/10 border-gold-400/20">
             <CardContent className="p-4">
-              <p className="cormorant-garamond text-base text-foreground mb-2 font-bold">
+              <p className="montserrat text-base text-foreground mb-2 font-bold">
                 Need bulk quantities or custom hampers?
               </p>
               <Button
                 variant="outline"
                 size="sm"
                 asChild
-                className="cormorant-garamond border-gold-400 text-base text-foreground mb-2 font-bold"
+                className="montserrat border-gold-400 text-base text-foreground mb-2 font-bold"
               >
                 <Link href="/corporate">
                   Get Corporate Quote
@@ -278,11 +278,11 @@ export function ProductDetail({ product }: ProductDetailProps) {
         <div className="mb-6 h-px bg-gradient-to-r from-transparent via-royal-gold/60 to-transparent" />
         <Accordion type="single" collapsible className="w-full">
           <AccordionItem value="ingredients">
-            <AccordionTrigger>Ingredients</AccordionTrigger>
+            <AccordionTrigger className="montserrat">Ingredients</AccordionTrigger>
             <AccordionContent>
               <ul className="list-disc list-inside space-y-1">
                 {product.ingredients.map((ingredient, index) => (
-                  <li key={index} className="text-muted-foreground">
+                  <li key={index} className="montserrat text-muted-foreground">
                     {ingredient}
                   </li>
                 ))}
@@ -291,11 +291,11 @@ export function ProductDetail({ product }: ProductDetailProps) {
           </AccordionItem>
 
           <AccordionItem value="process">
-            <AccordionTrigger>Our Process</AccordionTrigger>
+            <AccordionTrigger className="montserrat">Our Process</AccordionTrigger>
             <AccordionContent>
               <div className="space-y-2">
                 {product.processNotes.map((note, index) => (
-                  <p key={index} className="text-muted-foreground">
+                  <p key={index} className="montserrat text-muted-foreground">
                     • {note}
                   </p>
                 ))}
@@ -304,31 +304,31 @@ export function ProductDetail({ product }: ProductDetailProps) {
           </AccordionItem>
 
           <AccordionItem value="storage">
-            <AccordionTrigger>Storage & Shelf Life</AccordionTrigger>
+            <AccordionTrigger className="montserrat">Storage & Shelf Life</AccordionTrigger>
             <AccordionContent>
-              <p className="text-muted-foreground">{product.storage}</p>
+              <p className="montserrat text-muted-foreground">{product.storage}</p>
             </AccordionContent>
           </AccordionItem>
 
           <AccordionItem value="allergens">
-            <AccordionTrigger>Allergens</AccordionTrigger>
+            <AccordionTrigger className="montserrat">Allergens</AccordionTrigger>
             <AccordionContent>
               {product.allergens.length > 0 ? (
                 <ul className="list-disc list-inside space-y-1">
                   {product.allergens.map((allergen, index) => (
-                    <li key={index} className="text-muted-foreground">
+                    <li key={index} className="montserrat text-muted-foreground">
                       {allergen}
                     </li>
                   ))}
                 </ul>
               ) : (
-                <p className="text-muted-foreground">No known allergens</p>
+                <p className="montserrat text-muted-foreground">No known allergens</p>
               )}
             </AccordionContent>
           </AccordionItem>
 
           <AccordionItem value="nutrition">
-            <AccordionTrigger>
+            <AccordionTrigger className="montserrat">
               Nutrition Information
               {product.isProvisionalNutrition && (
                 <Badge variant="outline" className="ml-2">
@@ -339,11 +339,11 @@ export function ProductDetail({ product }: ProductDetailProps) {
             <AccordionContent>
               {product.nutritionPdf ? (
                 <div className="space-y-2">
-                  <p className="text-muted-foreground">
+                  <p className="montserrat text-muted-foreground">
                     Detailed nutrition information is available in our
                     lab-tested report.
                   </p>
-                  <Button variant="outline" size="sm" asChild>
+                  <Button variant="outline" size="sm" asChild className="montserrat">
                     <Link href={product.nutritionPdf} target="_blank">
                       View Nutrition Report
                       <ExternalLink className="h-4 w-4 ml-1" />
@@ -351,7 +351,7 @@ export function ProductDetail({ product }: ProductDetailProps) {
                   </Button>
                 </div>
               ) : (
-                <p className="text-muted-foreground">
+                <p className="montserrat text-muted-foreground">
                   Nutrition information will be available once lab testing is
                   complete.
                 </p>
@@ -390,7 +390,7 @@ function BatchInfo({ productId }: { productId: string }) {
       <CardContent className="p-4 space-y-3">
         <div className="flex items-center space-x-2">
           <Calendar className="h-4 w-4 text-gold-400" />
-          <span className="text-sm font-medium text-foreground">
+          <span className="montserrat text-sm font-medium text-foreground">
             Nitrogen-sealed on {sealedDate}
           </span>
         </div>
@@ -400,7 +400,7 @@ function BatchInfo({ productId }: { productId: string }) {
             <Button
               variant="ghost"
               size="sm"
-              className="text-gold-400 hover:text-gold-300 p-0 h-auto"
+              className="text-gold-400 hover:text-gold-300 p-0 h-auto montserrat"
             >
               <FlaskConical className="h-4 w-4 mr-1" />
               See lab report for batch {batch.code}
@@ -408,14 +408,14 @@ function BatchInfo({ productId }: { productId: string }) {
           </DialogTrigger>
           <DialogContent>
             <DialogHeader>
-              <DialogTitle>Lab Report - Batch {batch.code}</DialogTitle>
+              <DialogTitle className="montserrat">Lab Report - Batch {batch.code}</DialogTitle>
             </DialogHeader>
             <div className="space-y-4">
-              <p className="text-muted-foreground">
+              <p className="montserrat text-muted-foreground">
                 This batch was sealed on {sealedDate} and has undergone
                 comprehensive lab testing for quality and safety.
               </p>
-              <Button asChild className="w-full">
+              <Button asChild className="w-full montserrat">
                 <Link href={batch.labReportPdf} target="_blank">
                   View Full Lab Report
                   <ExternalLink className="h-4 w-4 ml-2" />

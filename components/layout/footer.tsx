@@ -26,7 +26,7 @@ export function Footer() {
               <li>
                 <Link
                   href="/products?category=activated-almonds"
-                  className="montserrat text-white/80 hover:text-royal-gold transition-colors duration-200"
+                  className="montserrat text-white/80 hover:text-royal-gold transition-all duration-300 hover:scale-105"
                 >
                   Activated Almonds
                 </Link>
@@ -34,13 +34,13 @@ export function Footer() {
               <li>
                 <Link
                   href="/products?category=dehydrated-fruits"
-                  className="montserrat text-white/80 hover:text-royal-gold transition-colors duration-200"
+                  className="montserrat text-white/80 hover:text-royal-gold transition-all duration-300 hover:scale-105"
                 >
                   Dehydrated Fruits
                 </Link>
               </li>
               <li>
-                <Link href="/corporate" className="montserrat text-warm-taupe hover:text-royal-gold transition-colors duration-200">
+                <Link href="/corporate" className="montserrat text-white/80 hover:text-royal-gold transition-all duration-300 hover:scale-105">
                   Corporate Gifting
                 </Link>
               </li>
@@ -52,22 +52,22 @@ export function Footer() {
             <h3 className="montserrat font-semibold text-white text-sm lg:text-base uppercase tracking-wider">Company</h3>
             <ul className="montserrat space-y-2 sm:space-y-3 text-xs sm:text-sm">
               <li>
-                <Link href="/about" className="text-white/80 hover:text-royal-gold transition-colors duration-200">
+                <Link href="/about" className="text-white/80 hover:text-royal-gold transition-all duration-300 hover:scale-105">
                   About Us
                 </Link>
               </li>
               <li>
-                <Link href="/contact" className="text-white/80 hover:text-royal-gold transition-colors duration-200">
+                <Link href="/contact" className="text-white/80 hover:text-royal-gold transition-all duration-300 hover:scale-105">
                   Contact
                 </Link>
               </li>
               <li>
-                <Link href="/labs" className="text-white/80 hover:text-royal-gold transition-colors duration-200">
+                <Link href="/labs" className="text-white/80 hover:text-royal-gold transition-all duration-300 hover:scale-105">
                   Lab Reports
                 </Link>
               </li>
               <li>
-                <Link href="/track" className="text-white/80 hover:text-royal-gold transition-colors duration-200">
+                <Link href="/track" className="text-white/80 hover:text-royal-gold transition-all duration-300 hover:scale-105">
                   Track Order
                 </Link>
               </li>
@@ -79,26 +79,26 @@ export function Footer() {
             <h3 className="montserrat font-semibold text-white text-sm lg:text-base uppercase tracking-wider">Legal</h3>
             <ul className="montserrat space-y-2 sm:space-y-3 text-xs sm:text-sm">
               <li>
-                <Link href="/privacy" className="text-white/80 hover:text-royal-gold transition-colors duration-200">
+                <Link href="/privacy" className="text-white/80 hover:text-royal-gold transition-all duration-300 hover:scale-105">
                   Privacy Policy
                 </Link>
               </li>
               <li>
-                <Link href="/terms" className="text-white/80 hover:text-royal-gold transition-colors duration-200">
+                <Link href="/terms" className="text-white/80 hover:text-royal-gold transition-all duration-300 hover:scale-105">
                   Terms of Service
                 </Link>
               </li>
             </ul>
 
             <div className="flex space-x-3 sm:space-x-4 pt-2 sm:pt-4">
-              <Link href="#" className="text-white/80 hover:text-royal-gold transition-colors duration-200 p-2 hover:bg-royal-gold/20 rounded-lg">
-                <Instagram className="h-4 w-4 sm:h-5 sm:w-5" />
+              <Link href="#" className="text-white/80 hover:text-royal-gold transition-all duration-300 hover:scale-110 p-2 hover:bg-royal-gold/20 rounded-lg group">
+                <Instagram className="h-4 w-4 sm:h-5 sm:w-5 group-hover:rotate-12 transition-transform duration-300" />
               </Link>
-              <Link href="#" className="text-white/80 hover:text-royal-gold transition-colors duration-200 p-2 hover:bg-royal-gold/20 rounded-lg">
-                <Twitter className="h-4 w-4 sm:h-5 sm:w-5" />
+              <Link href="#" className="text-white/80 hover:text-royal-gold transition-all duration-300 hover:scale-110 p-2 hover:bg-royal-gold/20 rounded-lg group">
+                <Twitter className="h-4 w-4 sm:h-5 sm:w-5 group-hover:rotate-12 transition-transform duration-300" />
               </Link>
-              <Link href="#" className="text-white/80 hover:text-royal-gold transition-colors duration-200 p-2 hover:bg-royal-gold/20 rounded-lg">
-                <Linkedin className="h-4 w-4 sm:h-5 sm:w-5" />
+              <Link href="#" className="text-white/80 hover:text-royal-gold transition-all duration-300 hover:scale-110 p-2 hover:bg-royal-gold/20 rounded-lg group">
+                <Linkedin className="h-4 w-4 sm:h-5 sm:w-5 group-hover:rotate-12 transition-transform duration-300" />
               </Link>
             </div>
           </div>
@@ -106,6 +106,18 @@ export function Footer() {
 
         <div className="border-t border-royal-gold/20 mt-8 sm:mt-12 pt-6 sm:pt-8 text-center text-xs sm:text-sm text-white/80">
           <p className="montserrat">&copy; 2025 MeeTreats. All rights reserved.</p>
+          <p className="montserrat mt-2 text-white/60">
+            Powered by{" "}
+            <Link 
+              href="https://mode-ai.co" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="transition-all duration-300 hover:scale-105 font-medium"
+              style={{color: '#D4AF37'}}
+            >
+              ModeAI
+            </Link>
+          </p>
         </div>
       </div>
     </footer>

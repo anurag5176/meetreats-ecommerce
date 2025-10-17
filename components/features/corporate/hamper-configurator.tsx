@@ -131,7 +131,7 @@ export function HamperConfigurator() {
             {/* Budget Slider */}
             <Card className="bg-white/80 backdrop-blur-sm border border-royal-gold/30 shadow-xl rounded-2xl">
               <CardHeader className="pb-6">
-                <CardTitle className="cormorant-garamond text-2xl font-semibold text-dark-chocolate">
+                <CardTitle className="cormorant-garamond text-2xl font-black text-dark-chocolate" style={{fontWeight: '900'}}>
                   Budget per Hamper
                 </CardTitle>
               </CardHeader>
@@ -190,7 +190,7 @@ export function HamperConfigurator() {
             {/* Product Selection */}
             <Card className="bg-white/80 backdrop-blur-sm border border-royal-gold/30 shadow-xl rounded-2xl">
               <CardHeader className="pb-6">
-                <CardTitle className="cormorant-garamond text-2xl font-semibold text-dark-chocolate">
+                <CardTitle className="cormorant-garamond text-2xl font-black text-dark-chocolate" style={{fontWeight: '900'}}>
                   Select Products (2-6 items)
                 </CardTitle>
                 <p className="montserrat text-sm text-charcoal/70 font-light">
@@ -203,7 +203,7 @@ export function HamperConfigurator() {
                   {availableProducts.map((product) => (
                     <div
                       key={product.id}
-                      className={`border rounded-xl p-4 cursor-pointer transition-all duration-300 hover:shadow-md ${
+                      className={`border rounded-xl p-4 cursor-pointer transition-all duration-300 hover:shadow-md hover:scale-105 ${
                         selectedProducts.includes(product.id)
                           ? "border-royal-gold bg-gradient-to-r from-royal-gold/10 to-[#D4AF37]/10 shadow-lg shadow-royal-gold/20"
                           : "border-royal-gold/20 hover:border-royal-gold/50 bg-white/50 hover:bg-white/80"
@@ -250,7 +250,7 @@ export function HamperConfigurator() {
             {/* Additional Options */}
             <Card className="bg-white/80 backdrop-blur-sm border border-royal-gold/30 shadow-xl rounded-2xl">
               <CardHeader className="pb-6">
-                <CardTitle className="cormorant-garamond text-2xl font-semibold text-dark-chocolate">
+                <CardTitle className="cormorant-garamond text-2xl font-black text-dark-chocolate" style={{fontWeight: '900'}}>
                   Additional Options
                 </CardTitle>
               </CardHeader>
@@ -304,7 +304,7 @@ export function HamperConfigurator() {
           <div className="lg:col-span-1">
             <Card className="sticky top-24 bg-white/80 backdrop-blur-sm border border-royal-gold/30 shadow-xl rounded-2xl">
               <CardHeader className="pb-6">
-                <CardTitle className="cormorant-garamond text-2xl font-semibold text-dark-chocolate">
+                <CardTitle className="cormorant-garamond text-2xl font-black text-dark-chocolate" style={{fontWeight: '900'}}>
                   Quote Summary
                 </CardTitle>
               </CardHeader>

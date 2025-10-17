@@ -1,13 +1,22 @@
+"use client"
+
 import Link from "next/link"
 import { ArrowRight } from "lucide-react"
+import { useScrollReveal } from "@/lib/hooks/use-scroll-reveal"
 
 export function CorporateGiftingShowcase() {
+  const [sectionRef, isSectionVisible] = useScrollReveal(0.1, 0)
+
   return (
-    <section className="py-20 sm:py-24 lg:py-32 bg-soft-cream">
+    <section ref={sectionRef} className="py-20 sm:py-24 lg:py-32 bg-soft-cream">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
           {/* Left Column - Image */}
-          <div className="order-2 lg:order-1">
+          <div className={`order-2 lg:order-1 transition-all duration-700 ease-out ${
+            isSectionVisible 
+              ? 'opacity-100 translate-x-0' 
+              : 'opacity-0 translate-x-8'
+          }`} style={{transitionDelay: '0.2s'}}>
             <div className="relative overflow-hidden rounded-lg group">
               <img
                 src="/corporategifting.jpg"
@@ -21,7 +30,11 @@ export function CorporateGiftingShowcase() {
           </div>
           
           {/* Right Column - Content */}
-          <div className="order-1 lg:order-2 space-y-8">
+          <div className={`order-1 lg:order-2 space-y-8 transition-all duration-700 ease-out ${
+            isSectionVisible 
+              ? 'opacity-100 translate-x-0' 
+              : 'opacity-0 translate-x-8'
+          }`} style={{transitionDelay: '0.4s'}}>
             {/* Two-line headline */}
             <div>
               <div className="montserrat text-base sm:text-lg text-royal-gold mb-4 font-medium tracking-wider uppercase">

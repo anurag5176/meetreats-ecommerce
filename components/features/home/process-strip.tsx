@@ -4,6 +4,7 @@ import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
 import { Droplets, Zap, Thermometer, Info } from "lucide-react"
+import { useScrollReveal } from "@/lib/hooks/use-scroll-reveal"
 
 const processSteps = [
   {
@@ -31,12 +32,17 @@ const processSteps = [
 
 export function ProcessStrip() {
   const [selectedStep, setSelectedStep] = useState<(typeof processSteps)[0] | null>(null)
+  const [sectionRef, isSectionVisible] = useScrollReveal(0.1, 0)
 
   return (
-    <section className="pb-20 sm:pb-24 bg-soft-cream">
+    <section ref={sectionRef} className="pb-20 sm:pb-24 bg-soft-cream">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         {/* Headline with high-contrast serif font */}
-        <div className="text-center mb-16 sm:mb-20">
+        <div className={`text-center mb-16 sm:mb-20 transition-all duration-700 ease-out ${
+          isSectionVisible 
+            ? 'opacity-100 translate-y-0' 
+            : 'opacity-0 translate-y-8'
+        }`} style={{transitionDelay: '0.2s'}}>
           <div className="montserrat text-base sm:text-lg text-royal-gold mb-4 font-medium tracking-wider uppercase text-center">
             THIS IS HOW WE CRAFT YOUR TREATS
           </div>
@@ -48,7 +54,11 @@ export function ProcessStrip() {
         {/* Process steps with proper alignment */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-16 max-w-6xl mx-auto">
           {processSteps.map((step, index) => (
-            <div key={index} className="text-center group">
+            <div key={index} className={`text-center group transition-all duration-700 ease-out ${
+              isSectionVisible 
+                ? 'opacity-100 translate-y-0' 
+                : 'opacity-0 translate-y-8'
+            }`} style={{transitionDelay: `${0.4 + index * 0.1}s`}}>
               {/* Icon and title */}
               <div className="mb-8">
                 <div className="mb-6">
