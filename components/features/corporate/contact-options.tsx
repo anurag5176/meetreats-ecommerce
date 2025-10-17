@@ -131,14 +131,14 @@ export function ContactOptions() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-12 max-w-6xl mx-auto">
           {/* Contact Form */}
           <Card className="bg-white/80 backdrop-blur-sm border border-royal-gold/30 shadow-xl rounded-2xl">
-            <CardHeader className="pb-6">
+            <CardHeader className="pb-4">
               <CardTitle className="cormorant-garamond text-2xl font-semibold text-dark-chocolate">
                 Request a Quote
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <form onSubmit={handleSubmit} className="space-y-4">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <form onSubmit={handleSubmit} className="space-y-3">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                   <div>
                     <Label
                       htmlFor="company"
@@ -176,7 +176,7 @@ export function ContactOptions() {
                   </div>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                   <div>
                     <Label htmlFor="email">Email *</Label>
                     <Input
@@ -204,7 +204,7 @@ export function ContactOptions() {
                   </div>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                   <div>
                     <Label htmlFor="budget">Budget per Hamper</Label>
                     <Select
@@ -281,13 +281,13 @@ export function ContactOptions() {
                     onChange={(e) =>
                       handleInputChange("message", e.target.value)
                     }
-                    rows={4}
+                    rows={3}
                   />
                 </div>
 
                 <Button
                   type="submit"
-                  className="w-full text-white font-semibold py-3 rounded-full transition-all duration-300 hover:shadow-lg hover:scale-105 active:scale-95"
+                  className="w-full text-white font-semibold py-2.5 rounded-full transition-all duration-300 hover:shadow-lg hover:scale-105 active:scale-90 "
                   style={{ backgroundColor: "#2a1914" }}
                   disabled={isSubmitting}
                 >
@@ -305,14 +305,14 @@ export function ContactOptions() {
           </Card>
 
           {/* Quick Contact Options */}
-          <div className="space-y-6">
-            <Card className="bg-white/80 backdrop-blur-sm border border-royal-gold/30 shadow-xl rounded-2xl">
+          <div className="space-y-6 flex flex-col">
+            <Card className="bg-white/80 backdrop-blur-sm border border-royal-gold/30 shadow-xl rounded-2xl min-h-[320px]">
               <CardHeader className="pb-6">
                 <CardTitle className="cormorant-garamond text-2xl font-semibold text-dark-chocolate">
                   Quick Contact
                 </CardTitle>
               </CardHeader>
-              <CardContent className="space-y-4">
+              <CardContent className="space-y-5 p-6">
                 <Button
                   variant="outline"
                   className="w-full justify-start bg-green-500/10 border-green-500/20 hover:bg-green-500/20"
