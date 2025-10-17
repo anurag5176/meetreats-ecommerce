@@ -139,6 +139,11 @@ function dispatch(action: Action) {
 
 type Toast = Omit<ToasterToast, 'id'>
 
+// Updated the toast background color globally
+const defaultToastProps = {
+  className: 'bg-white/90', // Light white background
+}
+
 function toast({ ...props }: Toast) {
   const id = genId()
 
@@ -181,10 +186,34 @@ function useToast() {
     }
   }, [state])
 
+  const addToast = (toast: ToasterToast) => {
+    const toastWithDefaults = {
+      ...defaultToastProps,
+      ...toast,
+    }
+
+    dispatch({
+      type: 'ADD_TOAST',
+      toast: {
+        ...toastWithDefaults,
+        id: genId(),
+        open: true,
+        onOpenChange: (open) => {
+          if (!open) dismiss()
+        },
+      },
+    })
+  }
+
+  const dismiss = () => {
+    // Placeholder for dismiss logic
+  }
+
   return {
     ...state,
     toast,
     dismiss: (toastId?: string) => dispatch({ type: 'DISMISS_TOAST', toastId }),
+    addToast,
   }
 }
 

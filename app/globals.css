@@ -2,8 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Import Montserrat for site-wide use */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&display=swap');
+
 :root {
-  --font-sans: var(--font-inter);
+  --font-montserrat: 'Montserrat', ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  --font-sans: var(--font-montserrat);
   --font-serif: var(--font-fraunces);
   --font-display: var(--font-canela);
   --font-playfair: var(--font-playfair);
@@ -60,6 +64,12 @@ body {
   color: hsl(var(--foreground));
   background: hsl(var(--background));
   font-feature-settings: "rlig" 1, "calt" 1;
+  font-family: var(--font-sans);
+}
+
+/* Force headings to use Montserrat for consistent brand */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-sans);
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -281,4 +291,10 @@ body {
 .transform-gpu {
   transform: translateZ(0);
   will-change: transform;
+}
+
+/* Force Montserrat inside product pages (overrides component-specific font classes) */
+.force-montserrat,
+.force-montserrat * {
+  font-family: var(--font-montserrat) !important;
 }

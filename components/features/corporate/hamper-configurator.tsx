@@ -141,7 +141,7 @@ export function HamperConfigurator() {
                     <Label className="montserrat text-sm font-medium text-charcoal/70">
                       Budget Range
                     </Label>
-                    <span className="cormorant-garamond text-2xl font-bold text-royal-gold">
+                    <span className="cormorant-garamond text-2xl font-bold text-dark-chocolate">
                       ₹{budgetPerUnit}
                     </span>
                   </div>
@@ -314,7 +314,7 @@ export function HamperConfigurator() {
                     <span className="montserrat text-sm font-medium text-charcoal/70">
                       Budget per hamper:
                     </span>
-                    <span className="cormorant-garamond text-lg font-semibold text-royal-gold">
+                    <span className="cormorant-garamond text-lg font-semibold text-dark-chocolate">
                       ₹{budgetPerUnit}
                     </span>
                   </div>
@@ -339,7 +339,7 @@ export function HamperConfigurator() {
                       <span className="montserrat text-sm font-medium text-charcoal/70">
                         Logo cards:
                       </span>
-                      <span className="cormorant-garamond text-lg font-semibold text-royal-gold">
+                      <span className="cormorant-garamond text-lg font-semibold text-dark-chocolate">
                         ₹{quantity * 50}
                       </span>
                     </div>
@@ -351,7 +351,7 @@ export function HamperConfigurator() {
                     <span className="montserrat font-semibold text-lg text-dark-chocolate">
                       Total Budget:
                     </span>
-                    <span className="cormorant-garamond text-2xl font-bold text-royal-gold">
+                    <span className="cormorant-garamond text-2xl font-bold text-dark-chocolate">
                       ₹{totalBudget + (includeLogoCard ? quantity * 50 : 0)}
                     </span>
                   </div>

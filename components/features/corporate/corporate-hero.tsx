@@ -28,7 +28,7 @@ export function CorporateHero() {
     <section className="relative overflow-hidden min-h-screen flex flex-col">
       {/* Hero Section with Background */}
       <div
-        className="relative flex-1 flex items-center -mt-20 pt-20"
+        className="relative flex items-center justify-center min-h-screen bg-cover bg-center bg-no-repeat"
         style={{
           backgroundImage: "url(/herobackground.png)",
           backgroundSize: "cover",
