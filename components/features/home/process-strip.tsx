@@ -1,8 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import { Button } from "@/components/ui/button"
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Droplets, Zap, Thermometer, Info } from "lucide-react"
 import { useScrollReveal } from "@/lib/hooks/use-scroll-reveal"
 
@@ -31,7 +30,7 @@ const processSteps = [
 ]
 
 export function ProcessStrip() {
-  const [selectedStep, setSelectedStep] = useState<(typeof processSteps)[0] | null>(null)
+  const [activeCard, setActiveCard] = useState<number | null>(null)
   const [sectionRef, isSectionVisible] = useScrollReveal(0.1, 0)
 
   return (
@@ -51,54 +50,47 @@ export function ProcessStrip() {
           </h2>
         </div>
 
-        {/* Process steps with proper alignment */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-16 max-w-6xl mx-auto">
+        {/* Process steps in cards */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12 max-w-6xl mx-auto">
           {processSteps.map((step, index) => (
-            <div key={index} className={`text-center group transition-all duration-700 ease-out ${
+            <Card key={index} className={`bg-white/80 backdrop-blur-sm border border-royal-gold/30 shadow-xl rounded-2xl group transition-all duration-700 ease-out hover:shadow-2xl relative overflow-hidden h-80 flex flex-col ${
               isSectionVisible 
                 ? 'opacity-100 translate-y-0' 
                 : 'opacity-0 translate-y-8'
             }`} style={{transitionDelay: `${0.4 + index * 0.1}s`}}>
-              {/* Icon and title */}
-              <div className="mb-8">
-                <div className="mb-6">
+              {/* Default content */}
+              <CardHeader className="text-center pb-4">
+                {/* Icon */}
+                <div className="mb-4">
                   <step.icon className="h-10 w-10 sm:h-12 sm:w-12 text-royal-gold mx-auto group-hover:scale-110 transition-transform duration-300" />
                 </div>
                 
-                {/* Title in deep chocolate brown, sans-serif, all caps */}
-                <h3 className="montserrat font-medium text-lg sm:text-xl text-dark-chocolate uppercase tracking-wider mb-4">
+                {/* Title */}
+                <CardTitle className="montserrat font-bold text-lg sm:text-xl text-dark-chocolate uppercase tracking-wider">
                   {step.title}
-                </h3>
+                </CardTitle>
+              </CardHeader>
+
+              <CardContent className="text-center flex-1 flex flex-col justify-between">
+                {/* Description */}
+                <p className="montserrat text-sm sm:text-base text-dark-chocolate/80 font-light leading-relaxed mb-4">
+                  {step.description}
+                </p>
+
+                {/* Interaction Instructions */}
+                <div className="montserrat text-xs font-medium text-dark-chocolate/60 text-center">
+                  <span className="hidden md:inline">Hover for details</span>
+                  <span className="md:hidden">Tap for details</span>
+                </div>
+              </CardContent>
+
+              {/* Glassmorphism overlay on hover */}
+              <div className="absolute inset-0 bg-white/85 backdrop-blur-2xl border border-royal-gold/20 rounded-2xl opacity-0 group-hover:opacity-100 transition-all duration-500 flex flex-col justify-center items-center p-6 text-center">
+                <p className="montserrat text-sm text-dark-chocolate leading-relaxed max-w-xs">
+                  {step.detail}
+                </p>
               </div>
-
-              {/* Description */}
-              <p className="montserrat text-sm sm:text-base text-dark-chocolate/80 mb-6 font-light leading-relaxed">
-                {step.description}
-              </p>
-
-              {/* Exclusive Learn More CTA */}
-              <Dialog>
-                <DialogTrigger asChild>
-                  <button className="group/btn montserrat text-sm font-medium text-dark-chocolate hover:text-royal-gold transition-colors duration-300 flex items-center justify-center mx-auto">
-                    <span className="border-b border-transparent group-hover/btn:border-royal-gold/50 transition-all duration-300">
-                      Learn More
-                    </span>
-                    <svg className="ml-2 h-3 w-3 text-royal-gold opacity-0 group-hover/btn:opacity-100 transition-opacity duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                    </svg>
-                  </button>
-                </DialogTrigger>
-                <DialogContent className="max-w-2xl">
-                  <DialogHeader>
-                    <DialogTitle className="flex items-center cormorant-garamond text-xl text-dark-chocolate">
-                      <step.icon className="h-6 w-6 text-royal-gold mr-3" />
-                      {step.title}
-                    </DialogTitle>
-                  </DialogHeader>
-                  <p className="montserrat text-dark-chocolate/80 leading-relaxed">{step.detail}</p>
-                </DialogContent>
-              </Dialog>
-            </div>
+            </Card>
           ))}
         </div>
       </div>
