@@ -4,7 +4,6 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { useCart } from "@/lib/hooks/use-cart";
-import { useScrollReveal } from "@/lib/hooks/use-scroll-reveal";
 import { ArrowRight, ShoppingCart, Instagram } from "lucide-react";
 import {
   Select,
@@ -81,13 +80,11 @@ export function CinematicScrollCollection() {
   const [currentProduct, setCurrentProduct] = useState(0);
   const [filteredProducts, setFilteredProducts] = useState(products);
   const { items, addItem, updateQuantity } = useCart();
-  const [activeFilter, setActiveFilter] = useState("all");
+  const [activeFilter, setActiveFilter] = useState("activated-almonds");
 
   const filters = [
-    { label: "All Products", value: "all" },
     { label: "Activated Almonds", value: "activated-almonds" },
     { label: "Dehydrated Fruits", value: "dehydrated-fruits" },
-    { label: "Cashews", value: "cashews" },
   ];
 
   useEffect(() => {
@@ -105,46 +102,42 @@ export function CinematicScrollCollection() {
   }, [filteredProducts]);
 
   useEffect(() => {
-    if (activeFilter === "all") {
-      setFilteredProducts(products);
-    } else {
-      setFilteredProducts(
-        products.filter(
-          (product) =>
-            product.category.toLowerCase().replace(/\s+/g, "-") === activeFilter
-        )
-      );
-    }
+    setFilteredProducts(
+      products.filter(
+        (product) =>
+          product.category.toLowerCase().replace(/\s+/g, "-") === activeFilter
+      )
+    );
   }, [activeFilter]);
 
   return (
     <div className="relative min-h-screen bg-soft-cream">
-      {/* Mobile Chip Filters */}
-      <div className="lg:hidden px-4 py-6">
-        <div className="flex flex-wrap gap-2 justify-center">
-          {filters.map((filter) => (
-            <button
-              key={filter.value}
-              onClick={() => setActiveFilter(filter.value)}
-              className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
-                activeFilter === filter.value
-                  ? "bg-dark-chocolate text-soft-cream shadow-lg"
-                  : "bg-[#FFF9F0] text-[#3B2F2F] border border-[#C6A760] hover:bg-[#C6A760]/20"
-              }`}
-            >
-              {filter.label}
-            </button>
-          ))}
+      {/* Sleek Filter Bar - Positioned below hero */}
+      <div className="w-full bg-[#2a1914] py-4 px-6">
+        <div className="max-w-2xl mx-auto">
+          <div className="flex items-center justify-center gap-4">
+            {filters.map((filter) => (
+              <button
+                key={filter.value}
+                onClick={() => setActiveFilter(filter.value)}
+                className={`px-8 py-3 rounded-full text-sm font-medium uppercase tracking-wider transition-all duration-300 flex-1 max-w-[200px] ${
+                  activeFilter === filter.value
+                    ? "bg-[#D4AF37] text-[#2a1914] shadow-lg"
+                    : "bg-[#FFFDF7] text-[#2a1914] border border-[#D4AF37]/30 hover:bg-[#D4AF37]/10 hover:border-[#D4AF37]/50"
+                }`}
+              >
+                {filter.label}
+              </button>
+            ))}
+          </div>
         </div>
       </div>
 
+
       {/* Products */}
       {filteredProducts.map((product, index) => {
-        const [productRef, isProductVisible] = useScrollReveal(0.1, 0);
-        
         return (
         <section
-          ref={productRef}
           key={product.id}
           id={`product-${index}`}
           className="min-h-screen flex flex-col lg:flex-row items-center"
@@ -172,47 +165,27 @@ export function CinematicScrollCollection() {
             <div className="flex-1 flex flex-col justify-center p-6 sm:p-8 bg-soft-cream">
               <div className="max-w-md mx-auto text-center">
                 {/* Category */}
-                <div className={`montserrat text-sm text-royal-gold uppercase tracking-wider font-medium mb-4 transition-all duration-700 ease-out ${
-                  isProductVisible 
-                    ? 'opacity-100 translate-x-0' 
-                    : 'opacity-0 translate-x-8'
-                }`} style={{transitionDelay: '0.1s'}}>
+                <div className="montserrat text-sm text-royal-gold uppercase tracking-wider font-medium mb-4">
                   {product.category}
                 </div>
 
                 {/* Product Name */}
-                <h2 className={`cormorant-garamond text-3xl sm:text-4xl text-dark-chocolate font-semibold mb-4 leading-tight transition-all duration-700 ease-out ${
-                  isProductVisible 
-                    ? 'opacity-100 translate-x-0' 
-                    : 'opacity-0 translate-x-8'
-                }`} style={{transitionDelay: '0.2s'}}>
+                <h2 className="cormorant-garamond text-3xl sm:text-4xl text-dark-chocolate font-semibold mb-4 leading-tight">
                   {product.name}
                 </h2>
 
                 {/* Description */}
-                <p className={`montserrat text-sm sm:text-base text-charcoal/80 mb-4 leading-relaxed font-light transition-all duration-700 ease-out ${
-                  isProductVisible 
-                    ? 'opacity-100 translate-x-0' 
-                    : 'opacity-0 translate-x-8'
-                }`} style={{transitionDelay: '0.3s'}}>
+                <p className="montserrat text-sm sm:text-base text-charcoal/80 mb-4 leading-relaxed font-light">
                   {product.description}
                 </p>
 
                 {/* Price */}
-                <div className={`montserrat text-xl font-semibold text-dark-chocolate mb-6 transition-all duration-700 ease-out ${
-                  isProductVisible 
-                    ? 'opacity-100 translate-x-0' 
-                    : 'opacity-0 translate-x-8'
-                }`} style={{transitionDelay: '0.4s'}}>
+                <div className="montserrat text-xl font-semibold text-dark-chocolate mb-6">
                   {product.price}
                 </div>
 
                 {/* CTA / Quantity Controls - Mobile */}
-                <div className={`transition-all duration-700 ease-out ${
-                  isProductVisible 
-                    ? 'opacity-100 translate-x-0' 
-                    : 'opacity-0 translate-x-8'
-                }`} style={{transitionDelay: '0.5s'}}>
+                <div>
                   {(() => {
                     const cartItem = items.find(
                       (i) => i.id === String(product.id)
@@ -300,47 +273,27 @@ export function CinematicScrollCollection() {
             <div className="w-2/5 flex items-center justify-center px-8 lg:px-12">
               <div className="max-w-md space-y-8">
                 {/* Category */}
-                <div className={`montserrat text-sm text-royal-gold uppercase tracking-wider font-medium transition-all duration-700 ease-out ${
-                  isProductVisible 
-                    ? 'opacity-100 translate-x-0' 
-                    : 'opacity-0 translate-x-8'
-                }`} style={{transitionDelay: '0.1s'}}>
+                <div className="montserrat text-sm text-royal-gold uppercase tracking-wider font-medium">
                   {product.category}
                 </div>
 
                 {/* Product Name */}
-                <h2 className={`cormorant-garamond text-4xl lg:text-5xl xl:text-6xl text-dark-chocolate font-semibold leading-tight transition-all duration-700 ease-out ${
-                  isProductVisible 
-                    ? 'opacity-100 translate-x-0' 
-                    : 'opacity-0 translate-x-8'
-                }`} style={{transitionDelay: '0.2s'}}>
+                <h2 className="cormorant-garamond text-4xl lg:text-5xl xl:text-6xl text-dark-chocolate font-semibold leading-tight">
                   {product.name}
                 </h2>
 
                 {/* Description */}
-                <p className={`montserrat text-lg text-charcoal/80 leading-relaxed font-light transition-all duration-700 ease-out ${
-                  isProductVisible 
-                    ? 'opacity-100 translate-x-0' 
-                    : 'opacity-0 translate-x-8'
-                }`} style={{transitionDelay: '0.3s'}}>
+                <p className="montserrat text-lg text-charcoal/80 leading-relaxed font-light">
                   {product.description}
                 </p>
 
                 {/* Price */}
-                <div className={`montserrat text-2xl font-semibold text-dark-chocolate transition-all duration-700 ease-out ${
-                  isProductVisible 
-                    ? 'opacity-100 translate-x-0' 
-                    : 'opacity-0 translate-x-8'
-                }`} style={{transitionDelay: '0.4s'}}>
+                <div className="montserrat text-2xl font-semibold text-dark-chocolate">
                   {product.price}
                 </div>
 
                 {/* CTA / Quantity Controls + View Details */}
-                <div className={`flex flex-col sm:flex-row gap-4 transition-all duration-700 ease-out ${
-                  isProductVisible 
-                    ? 'opacity-100 translate-x-0' 
-                    : 'opacity-0 translate-x-8'
-                }`} style={{transitionDelay: '0.5s'}}>
+                <div className="flex flex-col sm:flex-row gap-4">
                   {(() => {
                     const cartItem = items.find(
                       (i) => i.id === String(product.id)

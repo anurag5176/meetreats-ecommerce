@@ -12,6 +12,7 @@ import { useCart } from "@/lib/hooks/use-cart"
 import { useCartAnimation } from "@/lib/hooks/use-cart-animation"
 
 const leftNavigation = [
+  { name: "HOME", href: "/" },
   { name: "PRODUCTS", href: "/products" },
   { name: "CORPORATE GIFTING", href: "/corporate" },
 ]
