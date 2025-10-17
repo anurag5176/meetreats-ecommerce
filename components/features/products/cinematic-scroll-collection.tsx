@@ -5,6 +5,13 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { useCart } from "@/lib/hooks/use-cart";
 import { ArrowRight, ShoppingCart } from "lucide-react";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 const products = [
   {
@@ -71,6 +78,7 @@ const products = [
 
 export function CinematicScrollCollection() {
   const [currentProduct, setCurrentProduct] = useState(0);
+  const [filteredProducts, setFilteredProducts] = useState(products);
   const { items, addItem, updateQuantity } = useCart();
 
   useEffect(() => {
@@ -78,31 +86,53 @@ export function CinematicScrollCollection() {
       const scrollPosition = window.scrollY;
       const windowHeight = window.innerHeight;
       const productIndex = Math.round(scrollPosition / windowHeight);
-      if (productIndex >= 0 && productIndex < products.length) {
+      if (productIndex >= 0 && productIndex < filteredProducts.length) {
         setCurrentProduct(productIndex);
       }
     };
 
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  }, [filteredProducts]);
+
+  const handleFilterChange = (value: string) => {
+    if (value === "all") {
+      setFilteredProducts(products);
+    } else {
+      setFilteredProducts(
+        products.filter(
+          (product) =>
+            product.category.toLowerCase().replace(/\s+/g, "-") === value
+        )
+      );
+    }
+  };
 
   return (
     <div className="relative min-h-screen bg-soft-cream">
       {/* Mobile Sort Dropdown */}
       <div className="lg:hidden px-4 py-6">
         <div className="max-w-sm mx-auto">
-          <select className="montserrat w-full px-4 py-3 text-dark-chocolate bg-soft-cream border border-royal-gold/30 rounded-lg focus:outline-none focus:border-royal-gold/60 transition-colors duration-300">
-            <option value="all">All Products</option>
-            <option value="activated-almonds">Activated Almonds</option>
-            <option value="dehydrated-fruits">Dehydrated Fruits</option>
-            <option value="cashews">Cashews</option>
-          </select>
+          <Select onValueChange={handleFilterChange}>
+            <SelectTrigger className="w-full rounded-xl bg-[#FFF9F0] text-[#3B2F2F] border border-[#C6A760] shadow-md focus:ring-2 focus:ring-[#C6A760]/50 transition-all duration-300">
+              <SelectValue placeholder="All Products" />
+            </SelectTrigger>
+            <SelectContent className="rounded-xl bg-[#FFF9F0] text-[#3B2F2F] shadow-md">
+              <SelectItem value="all">All Products</SelectItem>
+              <SelectItem value="activated-almonds">
+                Activated Almonds
+              </SelectItem>
+              <SelectItem value="dehydrated-fruits">
+                Dehydrated Fruits
+              </SelectItem>
+              <SelectItem value="cashews">Cashews</SelectItem>
+            </SelectContent>
+          </Select>
         </div>
       </div>
 
       {/* Products */}
-      {products.map((product, index) => (
+      {filteredProducts.map((product, index) => (
         <section
           key={product.id}
           id={`product-${index}`}
@@ -363,21 +393,12 @@ export function CinematicScrollCollection() {
             {/* Instagram Call-to-Action */}
             <div className="text-center">
               <Link
-                href="https://instagram.com/meetreatsofficial"
+                href="https://instagram.com"
+                className="text-dark-chocolate font-medium hover:text-royal-gold transition-colors"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group inline-flex items-center justify-center px-8 py-4 border border-dark-chocolate/20 hover:border-royal-gold/50 transition-all duration-300 rounded-lg montserrat"
               >
-                <svg
-                  className="h-6 w-6 text-dark-chocolate group-hover:text-royal-gold transition-colors duration-300 mr-3"
-                  fill="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path d="M12.017 0C5.396 0 .029 5.367.029 11.987c0 6.62 5.367 11.987 11.988 11.987s11.987-5.367 11.987-11.987C24.014 5.367 18.647.001 12.017.001zM8.449 16.988c-1.297 0-2.448-.49-3.323-1.297C4.198 14.895 3.708 13.744 3.708 12.447s.49-2.448 1.297-3.323c.875-.807 2.026-1.297 3.323-1.297s2.448.49 3.323 1.297c.807.875 1.297 2.026 1.297 3.323s-.49 2.448-1.297 3.323c-.875.807-2.026 1.297-3.323 1.297zm7.83-9.297c-.49 0-.875-.385-.875-.875s.385-.875.875-.875.875.385.875.875-.385.875-.875.875zm-7.83 1.75c-2.026 0-3.675 1.649-3.675 3.675s1.649 3.675 3.675 3.675 3.675-1.649 3.675-3.675-1.649-3.675-3.675-3.675z" />
-                </svg>
-                <span className="montserrat text-base font-medium text-dark-chocolate group-hover:text-royal-gold transition-colors duration-300">
-                  @MeeTreatsOfficial
-                </span>
+                @MeeTreatsOfficial
               </Link>
             </div>
           </div>
