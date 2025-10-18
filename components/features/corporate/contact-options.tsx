@@ -132,7 +132,10 @@ export function ContactOptions() {
           {/* Contact Form */}
           <Card className="bg-white/80 backdrop-blur-sm border border-royal-gold/30 shadow-xl rounded-2xl">
             <CardHeader className="pb-4">
-              <CardTitle className="cormorant-garamond text-2xl font-semibold text-dark-chocolate" style={{fontWeight: '900'}}>
+              <CardTitle
+                className="cormorant-garamond text-2xl font-semibold text-dark-chocolate"
+                style={{ fontWeight: "900" }}
+              >
                 Request a Quote
               </CardTitle>
             </CardHeader>
@@ -308,7 +311,10 @@ export function ContactOptions() {
           <div className="space-y-6 flex flex-col">
             <Card className="bg-white/80 backdrop-blur-sm border border-royal-gold/30 shadow-xl rounded-2xl min-h-[320px]">
               <CardHeader className="pb-6">
-                <CardTitle className="cormorant-garamond text-2xl font-semibold text-dark-chocolate" style={{fontWeight: '900'}}>
+                <CardTitle
+                  className="cormorant-garamond text-2xl font-semibold text-dark-chocolate"
+                  style={{ fontWeight: "900" }}
+                >
                   Quick Contact
                 </CardTitle>
               </CardHeader>
@@ -327,7 +333,7 @@ export function ContactOptions() {
                     <div className="text-left">
                       <div className="font-medium">WhatsApp Business</div>
                       <div className="text-sm text-muted-foreground">
-                        Instant response during business hours
+                        Quick support, business hours
                       </div>
                     </div>
                   </a>
