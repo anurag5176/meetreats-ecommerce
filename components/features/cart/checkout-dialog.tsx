@@ -1,17 +1,22 @@
-"use client"
+"use client";
 
-import type React from "react"
+import type React from "react";
 
-import { useState } from "react"
-import { useRouter } from "next/navigation"
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { useCart } from "@/lib/hooks/use-cart"
-import { useToast } from "@/hooks/use-toast"
-import { Loader2 } from "lucide-react"
-import { z } from "zod"
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { useCart } from "@/lib/hooks/use-cart";
+import { useToast } from "@/hooks/use-toast";
+import { Loader2 } from "lucide-react";
+import { z } from "zod";
 
 const checkoutSchema = z.object({
   name: z.string().min(2, "Name must be at least 2 characters"),
@@ -24,15 +29,15 @@ const checkoutSchema = z.object({
     state: z.string().min(2, "State is required"),
     pincode: z.string().min(6, "Please enter a valid pincode"),
   }),
-})
+});
 
 interface CheckoutDialogProps {
-  open: boolean
-  onOpenChange: (open: boolean) => void
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
 }
 
 export function CheckoutDialog({ open, onOpenChange }: CheckoutDialogProps) {
-  const [isLoading, setIsLoading] = useState(false)
+  const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -44,35 +49,35 @@ export function CheckoutDialog({ open, onOpenChange }: CheckoutDialogProps) {
       state: "",
       pincode: "",
     },
-  })
+  });
 
-  const { items, getTotalPrice, clearCart } = useCart()
-  const { toast } = useToast()
-  const router = useRouter()
+  const { items, getTotalPrice, clearCart } = useCart();
+  const { toast } = useToast();
+  const router = useRouter();
 
-  const subtotal = getTotalPrice()
-  const shipping = subtotal >= 999 ? 0 : 99
-  const total = subtotal + shipping
+  const subtotal = getTotalPrice();
+  const shipping = subtotal >= 999 ? 0 : 99;
+  const total = subtotal + shipping;
 
   const handleInputChange = (field: string, value: string) => {
     if (field.startsWith("address.")) {
-      const addressField = field.split(".")[1]
+      const addressField = field.split(".")[1];
       setFormData((prev) => ({
         ...prev,
         address: { ...prev.address, [addressField]: value },
-      }))
+      }));
     } else {
-      setFormData((prev) => ({ ...prev, [field]: value }))
+      setFormData((prev) => ({ ...prev, [field]: value }));
     }
-  }
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setIsLoading(true)
+    e.preventDefault();
+    setIsLoading(true);
 
     try {
       // Validate form data
-      const validatedData = checkoutSchema.parse(formData)
+      const validatedData = checkoutSchema.parse(formData);
 
       const orderResponse = await fetch("/api/orders", {
         method: "POST",
@@ -88,14 +93,14 @@ export function CheckoutDialog({ open, onOpenChange }: CheckoutDialogProps) {
           })),
           totalAmount: total,
         }),
-      })
+      });
 
       if (!orderResponse.ok) {
-        throw new Error("Failed to create order")
+        throw new Error("Failed to create order");
       }
 
-      const { data } = await orderResponse.json()
-      const { orderId } = data
+      const { data } = await orderResponse.json();
+      const { orderId } = data;
 
       const paymentResponse = await fetch("/api/payment/create", {
         method: "POST",
@@ -105,13 +110,13 @@ export function CheckoutDialog({ open, onOpenChange }: CheckoutDialogProps) {
           amount: total,
           customerInfo: validatedData,
         }),
-      })
+      });
 
       if (!paymentResponse.ok) {
-        throw new Error("Failed to create payment")
+        throw new Error("Failed to create payment");
       }
 
-      const { razorpayOrderId, razorpayKey } = await paymentResponse.json()
+      const { razorpayOrderId, razorpayKey } = await paymentResponse.json();
 
       // Initialize Razorpay with server-provided key
       const options = {
@@ -132,21 +137,22 @@ export function CheckoutDialog({ open, onOpenChange }: CheckoutDialogProps) {
                 razorpay_order_id: response.razorpay_order_id,
                 razorpay_signature: response.razorpay_signature,
               }),
-            })
+            });
 
             if (verifyResponse.ok) {
-              clearCart()
-              onOpenChange(false)
-              router.push(`/thank-you?orderId=${orderId}`)
+              clearCart();
+              onOpenChange(false);
+              router.push(`/thank-you?orderId=${orderId}`);
             } else {
-              throw new Error("Payment verification failed")
+              throw new Error("Payment verification failed");
             }
           } catch (error) {
             toast({
               title: "Payment Error",
-              description: "There was an issue processing your payment. Please contact support.",
+              description:
+                "There was an issue processing your payment. Please contact support.",
               variant: "destructive",
-            })
+            });
           }
         },
         prefill: {
@@ -157,29 +163,29 @@ export function CheckoutDialog({ open, onOpenChange }: CheckoutDialogProps) {
         theme: {
           color: "#8b5cf6",
         },
-      }
+      };
 
       // @ts-ignore - Razorpay is loaded via script
-      const rzp = new window.Razorpay(options)
-      rzp.open()
+      const rzp = new window.Razorpay(options);
+      rzp.open();
     } catch (error) {
       if (error instanceof z.ZodError) {
         toast({
           title: "Validation Error",
           description: error.errors[0].message,
           variant: "destructive",
-        })
+        });
       } else {
         toast({
           title: "Error",
           description: "Something went wrong. Please try again.",
           variant: "destructive",
-        })
+        });
       }
     } finally {
-      setIsLoading(false)
+      setIsLoading(false);
     }
-  }
+  };
 
   return (
     <>
@@ -187,132 +193,210 @@ export function CheckoutDialog({ open, onOpenChange }: CheckoutDialogProps) {
       <script src="https://checkout.razorpay.com/v1/checkout.js" async />
 
       <Dialog open={open} onOpenChange={onOpenChange}>
-        <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto bg-soft-cream">
+        <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto bg-soft-cream p-6 sm:p-8 rounded-lg">
           <DialogHeader>
-            <DialogTitle className="text-2xl font-bold text-charcoal font-fraunces">Checkout</DialogTitle>
+            <DialogTitle className="cormorant-garamond text-2xl text-dark-chocolate font-semibold">
+              Checkout
+            </DialogTitle>
           </DialogHeader>
 
           <form onSubmit={handleSubmit} className="space-y-6">
             {/* Contact Information */}
-            <div className="space-y-6">
-              <h3 className="font-semibold text-charcoal text-lg">Contact Information</h3>
+            <div className="bg-white/80 backdrop-blur-sm border border-royal-gold/30 rounded-2xl p-6">
+              <h3 className="cormorant-garamond text-lg text-dark-chocolate font-semibold mb-3">
+                Contact Information
+              </h3>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                  <Label htmlFor="name">Full Name *</Label>
+                  <Label
+                    htmlFor="name"
+                    className="montserrat text-sm font-medium text-charcoal/70"
+                  >
+                    Full Name *
+                  </Label>
                   <Input
                     id="name"
                     value={formData.name}
                     onChange={(e) => handleInputChange("name", e.target.value)}
                     required
+                    className="border-royal-gold/20 focus:border-royal-gold/40 focus:ring-royal-gold/20"
                   />
                 </div>
 
                 <div>
-                  <Label htmlFor="phone">Phone Number *</Label>
+                  <Label
+                    htmlFor="phone"
+                    className="montserrat text-sm font-medium text-charcoal/70"
+                  >
+                    Phone Number *
+                  </Label>
                   <Input
                     id="phone"
                     type="tel"
                     value={formData.phone}
                     onChange={(e) => handleInputChange("phone", e.target.value)}
                     required
+                    className="border-royal-gold/20 focus:border-royal-gold/40 focus:ring-royal-gold/20"
                   />
                 </div>
               </div>
 
-              <div>
-                <Label htmlFor="email">Email Address *</Label>
+              <div className="mt-4">
+                <Label
+                  htmlFor="email"
+                  className="montserrat text-sm font-medium text-charcoal/70"
+                >
+                  Email Address *
+                </Label>
                 <Input
                   id="email"
                   type="email"
                   value={formData.email}
                   onChange={(e) => handleInputChange("email", e.target.value)}
                   required
+                  className="border-royal-gold/20 focus:border-royal-gold/40 focus:ring-royal-gold/20"
                 />
               </div>
             </div>
 
             {/* Shipping Address */}
-            <div className="space-y-6">
-              <h3 className="font-semibold text-charcoal text-lg">Shipping Address</h3>
+            <div className="bg-white/80 backdrop-blur-sm border border-royal-gold/30 rounded-2xl p-6">
+              <h3 className="cormorant-garamond text-lg text-dark-chocolate font-semibold mb-3">
+                Shipping Address
+              </h3>
 
               <div>
-                <Label htmlFor="address-line1">Address Line 1 *</Label>
+                <Label
+                  htmlFor="address-line1"
+                  className="montserrat text-sm font-medium text-charcoal/70"
+                >
+                  Address Line 1 *
+                </Label>
                 <Input
                   id="address-line1"
                   value={formData.address.line1}
-                  onChange={(e) => handleInputChange("address.line1", e.target.value)}
+                  onChange={(e) =>
+                    handleInputChange("address.line1", e.target.value)
+                  }
                   required
+                  className="border-royal-gold/20 focus:border-royal-gold/40 focus:ring-royal-gold/20"
                 />
               </div>
 
-              <div>
-                <Label htmlFor="address-line2">Address Line 2</Label>
+              <div className="mt-3">
+                <Label
+                  htmlFor="address-line2"
+                  className="montserrat text-sm font-medium text-charcoal/70"
+                >
+                  Address Line 2
+                </Label>
                 <Input
                   id="address-line2"
                   value={formData.address.line2}
-                  onChange={(e) => handleInputChange("address.line2", e.target.value)}
+                  onChange={(e) =>
+                    handleInputChange("address.line2", e.target.value)
+                  }
+                  className="border-royal-gold/20 focus:border-royal-gold/40 focus:ring-royal-gold/20"
                 />
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-3">
                 <div>
-                  <Label htmlFor="city">City *</Label>
+                  <Label
+                    htmlFor="city"
+                    className="montserrat text-sm font-medium text-charcoal/70"
+                  >
+                    City *
+                  </Label>
                   <Input
                     id="city"
                     value={formData.address.city}
-                    onChange={(e) => handleInputChange("address.city", e.target.value)}
+                    onChange={(e) =>
+                      handleInputChange("address.city", e.target.value)
+                    }
                     required
+                    className="border-royal-gold/20 focus:border-royal-gold/40 focus:ring-royal-gold/20"
                   />
                 </div>
 
                 <div>
-                  <Label htmlFor="state">State *</Label>
+                  <Label
+                    htmlFor="state"
+                    className="montserrat text-sm font-medium text-charcoal/70"
+                  >
+                    State *
+                  </Label>
                   <Input
                     id="state"
                     value={formData.address.state}
-                    onChange={(e) => handleInputChange("address.state", e.target.value)}
+                    onChange={(e) =>
+                      handleInputChange("address.state", e.target.value)
+                    }
                     required
+                    className="border-royal-gold/20 focus:border-royal-gold/40 focus:ring-royal-gold/20"
                   />
                 </div>
 
                 <div>
-                  <Label htmlFor="pincode">Pincode *</Label>
+                  <Label
+                    htmlFor="pincode"
+                    className="montserrat text-sm font-medium text-charcoal/70"
+                  >
+                    Pincode *
+                  </Label>
                   <Input
                     id="pincode"
                     value={formData.address.pincode}
-                    onChange={(e) => handleInputChange("address.pincode", e.target.value)}
+                    onChange={(e) =>
+                      handleInputChange("address.pincode", e.target.value)
+                    }
                     required
+                    className="border-royal-gold/20 focus:border-royal-gold/40 focus:ring-royal-gold/20"
                   />
                 </div>
               </div>
             </div>
 
             {/* Order Summary */}
-            <div className="bg-champagne/30 border border-royal-gold/20 rounded-xl p-6 shadow-soft">
-              <h3 className="font-semibold text-charcoal mb-6 text-lg">Order Summary</h3>
+            <div className="bg-royal-gold/10 border border-royal-gold/30 rounded-xl p-6">
+              <h3 className="cormorant-garamond text-lg text-dark-chocolate font-semibold mb-4">
+                Order Summary
+              </h3>
 
-              <div className="space-y-2 text-sm">
+              <div className="space-y-2 text-sm montserrat text-warm-taupe">
                 <div className="flex justify-between">
                   <span>Subtotal ({items.length} items)</span>
-                  <span>₹{subtotal}</span>
+                  <span className="cormorant-garamond text-xl text-dark-chocolate">
+                    ₹{subtotal}
+                  </span>
                 </div>
                 <div className="flex justify-between">
                   <span>Shipping</span>
-                  <span>{shipping === 0 ? "Free" : `₹${shipping}`}</span>
+                  <span className="text-dark-chocolate">
+                    {shipping === 0 ? "Free" : `₹${shipping}`}
+                  </span>
                 </div>
-                <div className="border-t border-border pt-2 flex justify-between font-semibold">
-                  <span>Total</span>
-                  <span>₹{total}</span>
+                <div className="border-t border-royal-gold/30 pt-2 flex justify-between items-center">
+                  <span className="montserrat text-dark-chocolate font-medium">
+                    Total
+                  </span>
+                  <span className="cormorant-garamond text-xl sm:text-2xl text-dark-chocolate font-bold">
+                    ₹{total}
+                  </span>
                 </div>
               </div>
             </div>
 
             <Button
               type="submit"
-              className="w-full btn-plum"
+              className="w-full text-white font-semibold py-3 rounded-full transition-transform duration-300 transform-gpu hover:scale-105 hover:shadow-xl active:scale-95 focus:outline-none focus:ring-4 focus:ring-royal-gold/20 disabled:opacity-60 disabled:cursor-not-allowed"
               size="lg"
               disabled={isLoading}
+              style={{
+                backgroundColor: "#2a1914",
+                boxShadow: "0 8px 24px rgba(42,25,20,0.12)",
+              }}
             >
               {isLoading ? (
                 <>
@@ -327,5 +411,5 @@ export function CheckoutDialog({ open, onOpenChange }: CheckoutDialogProps) {
         </DialogContent>
       </Dialog>
     </>
-  )
+  );
 }
