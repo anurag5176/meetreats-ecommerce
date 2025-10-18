@@ -1,41 +1,54 @@
-"use client"
+"use client";
 
-import { useCart } from "@/lib/hooks/use-cart"
-import { CartItem } from "./cart-item"
-import { CartSummary } from "./cart-summary"
-import { Button } from "@/components/ui/button"
-import { ShoppingBag } from "lucide-react"
-import Link from "next/link"
+import { useCart } from "@/lib/hooks/use-cart";
+import { CartItem } from "./cart-item";
+import { CartSummary } from "./cart-summary";
+import { Button } from "@/components/ui/button";
+import { ShoppingBag } from "lucide-react";
+import Link from "next/link";
 
 export function CartContent() {
-  const { items } = useCart()
+  const { items } = useCart();
 
   if (items.length === 0) {
     return (
-      <div className="text-center py-20">
-        <div className="p-6 rounded-full bg-royal-gold/10 w-24 h-24 mx-auto mb-8 flex items-center justify-center border border-royal-gold/20">
-          <ShoppingBag className="h-12 w-12 text-royal-gold" />
+      <div className="flex items-center justify-center min-h-[400px]">
+        <div className="bg-white/80 backdrop-blur-sm border border-royal-gold/30 shadow-xl rounded-2xl px-8 py-12 w-full max-w-lg text-center">
+          <div className="p-6 rounded-full bg-royal-gold/10 w-20 h-20 mx-auto mb-6 flex items-center justify-center border border-royal-gold/30">
+            <ShoppingBag className="h-10 w-10 text-royal-gold" />
+          </div>
+          <h2 className="cormorant-garamond text-3xl sm:text-4xl text-dark-chocolate mb-4">
+            Your cart is empty
+          </h2>
+          <p className="montserrat text-base text-warm-taupe mb-8 max-w-md mx-auto">
+            Add some delicious snacks to get started!
+          </p>
+          <Button
+            asChild
+            className="bg-royal-gold/90 hover:bg-royal-gold text-dark-chocolate font-semibold px-8 py-3 rounded-full text-base shadow-md transition-all duration-300"
+          >
+            <Link href="/products">Shop Products</Link>
+          </Button>
         </div>
-        <h2 className="satisfy-regular text-4xl text-charcoal mb-6">Your cart is empty</h2>
-        <p className="text-lg text-warm-taupe mb-10 max-w-md mx-auto">Add some delicious snacks to get started!</p>
-        <Button asChild className="btn-plum px-8 py-4 text-lg">
-          <Link href="/products">Shop Products</Link>
-        </Button>
       </div>
-    )
+    );
   }
 
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
+    <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
       <div className="lg:col-span-2 space-y-6">
         {items.map((item) => (
-          <CartItem key={item.id} item={item} />
+          <div className="bg-white/80 backdrop-blur-sm border border-royal-gold/30 shadow-xl rounded-2xl p-4 sm:p-6">
+            <CartItem key={item.id} item={item} />
+          </div>
         ))}
       </div>
 
       <div className="lg:col-span-1">
-        <CartSummary />
+        <div className="bg-white/80 backdrop-blur-sm border border-royal-gold/30 shadow-xl rounded-2xl p-4 sm:p-6">
+          <CartSummary />
+        </div>
       </div>
     </div>
-  )
+  );
 }
