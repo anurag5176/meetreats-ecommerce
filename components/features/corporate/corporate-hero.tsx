@@ -29,7 +29,7 @@ const benefits = [
 export function CorporateHero() {
   const [heroRef, isHeroVisible] = useScrollReveal(0.1, 0);
   const [benefitsRef, isBenefitsVisible] = useScrollReveal(0.1, 0);
-  
+
   return (
     <section className="relative overflow-hidden min-h-screen flex flex-col">
       {/* Hero Section with Background */}
@@ -41,34 +41,45 @@ export function CorporateHero() {
           backgroundSize: "cover",
           backgroundPosition: "center",
           backgroundRepeat: "no-repeat",
+          backgroundPosition: window.innerWidth < 768 ? "45% center" : "center",
         }}
       >
         {/* Dark overlay */}
-        <div className="absolute inset-0 bg-black/5"></div>
-        
+        <div className="absolute inset-0 bg-black/10 sm:bg-transparent"></div>
+
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 w-full relative z-10">
           <div className="text-left max-w-4xl">
             {/* Content container with left alignment */}
             <div className="h-[60vh] flex flex-col justify-center">
               {/* Main Headline - Matching homepage style */}
-              <h1 className={`cormorant-garamond text-[36px] sm:text-[48px] md:text-[56px] lg:text-[64px] text-dark-chocolate mb-6 sm:mb-8 text-balance leading-[0.9] font-light tracking-tight transition-all duration-700 ease-out ${
-                isHeroVisible 
-                  ? 'opacity-100 translate-y-0' 
-                  : 'opacity-0 translate-y-8'
-              }`} style={{transitionDelay: '0.1s'}}>
+              <h1
+                className={`cormorant-garamond text-[36px] sm:text-[48px] md:text-[56px] lg:text-[64px] text-dark-chocolate mb-6 sm:mb-8 text-balance leading-[0.9] font-light tracking-tight transition-all duration-700 ease-out ${
+                  isHeroVisible
+                    ? "opacity-100 translate-y-0"
+                    : "opacity-0 translate-y-8"
+                }`}
+                style={{ transitionDelay: "0.1s" }}
+              >
                 Corporate Gifting.
                 <br />
                 <span className="text-royal-gold/90">Redefined.</span>
               </h1>
 
               {/* Sub-headline - Matching homepage style */}
-              <p className={`montserrat text-[16px] sm:text-[18px] leading-[28px] sm:leading-[32px] text-charcoal/70 mb-8 sm:mb-10 max-w-xl text-pretty font-light tracking-wide transition-all duration-700 ease-out ${
-                isHeroVisible 
-                  ? 'opacity-100 translate-y-0' 
-                  : 'opacity-0 translate-y-8'
-              }`} style={{transitionDelay: '0.2s'}}>
-                Make every milestone memorable with curated hampers crafted from premium, clean-label snacks. A perfect blend of taste, wellness, and sophistication.
-              </p>
+              <div className="relative z-10 text-white sm:text-charcoal/70 [text-shadow:0_2px_6px_rgba(0,0,0,0.5)] sm:[text-shadow:none] transition-all duration-700 ease-out">
+                <p
+                  className={`montserrat text-[16px] sm:text-[18px] leading-[28px] sm:leading-[32px] max-w-xl font-light tracking-wide opacity-90 transition-all duration-700 ease-out ${
+                    isHeroVisible
+                      ? "opacity-100 translate-y-0"
+                      : "opacity-0 translate-y-8"
+                  }`}
+                  style={{ transitionDelay: "0.25s" }}
+                >
+                  Make every milestone memorable with curated hampers crafted
+                  from premium, clean-label snacks — a perfect blend of taste,
+                  wellness, and sophistication.
+                </p>
+              </div>
             </div>
           </div>
         </div>
@@ -136,11 +147,15 @@ export function CorporateHero() {
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 sm:gap-12 md:gap-16">
             {benefits.map((benefit, index) => (
-              <div key={index} className={`text-center group transition-all duration-700 ease-out ${
-                isBenefitsVisible 
-                  ? 'opacity-100 translate-y-0' 
-                  : 'opacity-0 translate-y-8'
-              }`} style={{transitionDelay: `${0.1 + index * 0.1}s`}}>
+              <div
+                key={index}
+                className={`text-center group transition-all duration-700 ease-out ${
+                  isBenefitsVisible
+                    ? "opacity-100 translate-y-0"
+                    : "opacity-0 translate-y-8"
+                }`}
+                style={{ transitionDelay: `${0.1 + index * 0.1}s` }}
+              >
                 {/* Floating icon - no container, just the icon */}
                 <div className="mb-6">
                   <benefit.icon className="h-8 w-8 sm:h-10 sm:w-10 text-royal-gold mx-auto group-hover:scale-110 transition-transform duration-300" />

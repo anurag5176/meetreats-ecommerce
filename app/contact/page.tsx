@@ -28,8 +28,8 @@ export default function ContactPage() {
           backgroundRepeat: "no-repeat",
         }}
       >
-        {/* Dark overlay */}
-        <div className="absolute inset-0 bg-black/5"></div>
+        {/* Dark overlay (mobile only) */}
+        <div className="absolute inset-0 bg-black/20 sm:bg-transparent"></div>
 
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 w-full relative z-10">
           <div className="text-left max-w-4xl">
@@ -51,7 +51,7 @@ export default function ContactPage() {
 
               {/* Sub-headline - Matching homepage style */}
               <p
-                className={`montserrat text-[16px] sm:text-[18px] leading-[28px] sm:leading-[32px] text-charcoal/70 mb-8 sm:mb-10 max-w-xl text-pretty font-light tracking-wide transition-all duration-700 ease-out ${
+                className={`montserrat text-[15px] sm:text-[17px] leading-[26px] sm:leading-[30px] max-w-lg font-light tracking-wide italic text-white/90 drop-shadow-[0_1px_2px_rgba(255,255,255,0.25)] transition-all duration-700 ease-out ${
                   isHeroVisible
                     ? "opacity-100 translate-y-0"
                     : "opacity-0 translate-y-8"

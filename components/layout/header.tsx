@@ -59,7 +59,7 @@ export function Header() {
           {/* Logo - Center */}
           <Link
             href="/"
-            className="flex items-center flex-shrink-0 -mt-4 hover:scale-105 transition-transform duration-500 ease-out"
+            className="flex items-center flex-shrink-0 mt-[1px] sm:-mt-4 hover:scale-105 transition-transform duration-500 ease-out"
           >
             <Image
               src="/meetreatslogo.png"
@@ -100,7 +100,7 @@ export function Header() {
             >
               <Link href="/cart" className="relative">
                 <ShoppingCart
-                  className={`h-4 w-4 sm:h-5 sm:w-5 transition-all duration-300 ${
+                  className={`h-[24px] w-[24px] sm:h-5 sm:w-5 drop-shadow-md sm:drop-shadow-none transition-all duration-300 ${
                     isAnimating ? "text-royal-gold animate-cart-bounce" : ""
                   }`}
                 />
@@ -125,7 +125,7 @@ export function Header() {
                   size="sm"
                   className="hover:bg-royal-gold/20 text-warm-taupe hover:text-royal-gold p-2"
                 >
-                  <Menu className="h-4 w-4 sm:h-5 sm:w-5" />
+                  <Menu className="h-[24px] w-[24px] sm:h-5 sm:w-5 drop-shadow-md sm:drop-shadow-none" />
                 </Button>
               </SheetTrigger>
               <SheetContent
@@ -142,6 +142,13 @@ export function Header() {
                   />
                 </div>
                 <nav className="flex flex-col space-y-4 sm:space-y-6">
+                  <Link
+                    href="/"
+                    className="montserrat text-base sm:text-lg font-semibold text-warm-taupe hover:text-royal-gold transition-colors duration-200 uppercase tracking-wide"
+                    onClick={() => setIsOpen(false)}
+                  >
+                    HOME
+                  </Link>
                   {leftNavigation.map((item) => (
                     <Link
                       key={item.name}

@@ -192,7 +192,12 @@ export function CheckoutDialog({ open, onOpenChange }: CheckoutDialogProps) {
       {/* Razorpay Script */}
       <script src="https://checkout.razorpay.com/v1/checkout.js" async />
 
-      <Dialog open={open} onOpenChange={onOpenChange}>
+      <Dialog
+        open={open}
+        onOpenChange={onOpenChange}
+        onOpenAutoFocus={(e) => e.preventDefault()}
+        onCloseAutoFocus={(e) => e.preventDefault()}
+      >
         <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto bg-soft-cream p-6 sm:p-8 rounded-lg">
           <DialogHeader>
             <DialogTitle className="cormorant-garamond text-2xl text-dark-chocolate font-semibold">
