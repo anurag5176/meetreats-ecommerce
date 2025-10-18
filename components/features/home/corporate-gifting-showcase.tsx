@@ -19,7 +19,7 @@ export function CorporateGiftingShowcase() {
           }`} style={{transitionDelay: '0.2s'}}>
             <div className="relative overflow-hidden rounded-lg group">
               <img
-                src="/corporategifting.jpg"
+                src="/CORPORATEGIFTING.jpg"
                 alt="Corporate Gifting Solutions"
                 className="w-full h-[400px] sm:h-[500px] object-cover object-center group-hover:scale-105 transition-transform duration-700"
                 style={{objectPosition: 'center 60%'}}
