@@ -2,6 +2,7 @@
 
 import { Gift, Users, Award, Clock } from "lucide-react";
 import { useScrollReveal } from "@/lib/hooks/use-scroll-reveal";
+import { useState, useEffect } from "react";
 
 const benefits = [
   {
@@ -29,6 +30,23 @@ const benefits = [
 export function CorporateHero() {
   const [heroRef, isHeroVisible] = useScrollReveal(0.1, 0);
   const [benefitsRef, isBenefitsVisible] = useScrollReveal(0.1, 0);
+  const [bgPosition, setBgPosition] = useState("center");
+
+  useEffect(() => {
+    // Define the handler function
+    const updatePosition = () => {
+      setBgPosition(window.innerWidth < 768 ? "45% center" : "center");
+    };
+
+    // Run on mount
+    updatePosition();
+
+    // Update on window resize
+    window.addEventListener("resize", updatePosition);
+
+    // Cleanup
+    return () => window.removeEventListener("resize", updatePosition);
+  }, []);
 
   return (
     <section className="relative overflow-hidden min-h-screen flex flex-col">
@@ -39,9 +57,8 @@ export function CorporateHero() {
         style={{
           backgroundImage: 'url("/corporate%20gifting%20hero.png")',
           backgroundSize: "cover",
-          backgroundPosition: "center",
           backgroundRepeat: "no-repeat",
-          backgroundPosition: window.innerWidth < 768 ? "45% center" : "center",
+          backgroundPosition: bgPosition,
         }}
       >
         {/* Dark overlay */}

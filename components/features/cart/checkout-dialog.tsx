@@ -190,8 +190,8 @@ export function CheckoutDialog({ open, onOpenChange }: CheckoutDialogProps) {
   return (
     <>
       {/* Razorpay Script */}
-      <script src="https://checkout.razorpay.com/v1/checkout.js" async />
-
+      if (typeof window !== "undefined"){" "}
+      {<script src="https://checkout.razorpay.com/v1/checkout.js" async />}
       <Dialog
         open={open}
         onOpenChange={onOpenChange}
