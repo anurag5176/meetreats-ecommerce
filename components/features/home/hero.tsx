@@ -22,10 +22,10 @@ export function Hero() {
           <div className="h-[60vh] flex flex-col justify-center">
             {/* Main Headline - Reduced size, left aligned */}
             <h1 className="cormorant-garamond text-[36px] sm:text-[48px] md:text-[56px] lg:text-[64px] text-dark-chocolate mb-6 sm:mb-8 text-balance leading-[0.9] font-light tracking-tight animate-fade-in-up hover:scale-105 transition-transform duration-700 ease-out cursor-default">
-              The India's Finest Treats.
+              India’s Finest Clean-Label Treats.
               <br />
               <span className="text-royal-gold/90 hover:text-royal-gold transition-colors duration-500">
-                Crafted for You.
+                Handcrafted indulgence, refined with science and soul.
               </span>
             </h1>
 
@@ -38,8 +38,8 @@ mb-8 sm:mb-10 max-w-xl text-pretty font-light tracking-wide
 animate-fade-in-up animate-delay-200 
 hover:text-charcoal/90 transition-colors duration-500 cursor-default"
             >
-              Artisanal activated nuts and dehydrated fruits, crafted with clean
-              ingredients and thoughtful care.
+              Artisanal activated nuts and slow-dehydrated fruits — crafted with
+              clean ingredients and quiet precision.
             </p>
 
             {/* CTA Buttons - Left aligned, reduced size */}

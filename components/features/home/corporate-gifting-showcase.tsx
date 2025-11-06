@@ -60,11 +60,10 @@ export function CorporateGiftingShowcase() {
             {/* Body text */}
             <div className="space-y-4">
               <p className="montserrat text-lg text-dark-chocolate/80 leading-relaxed font-light">
-                From handpicked artisanal treats to custom-branded hampers,
-                every box reflects care, quality, and distinction. Whether
-                you're appreciating partners, honoring achievers, or nurturing
-                relationships, our premium collections turn gestures into
-                lasting impressions.
+                From clean-label treats to bespoke hampers, every MeeTreats gift
+                embodies care, intention, and modern indulgence. Whether
+                celebrating milestones or nurturing partnerships, our gifting
+                experiences turn gestures into memories.
               </p>
               <p className="montserrat text-base text-dark-chocolate/70 leading-relaxed font-light">
                 Tailored branding, luxury packaging, and large-volume dispatch
@@ -79,9 +78,7 @@ export function CorporateGiftingShowcase() {
                 className="group inline-flex items-center justify-center px-10 sm:px-12 py-4 sm:py-5 text-base sm:text-lg w-full sm:w-auto font-light tracking-wider border-0 rounded-none text-white hover:shadow-lg transition-all duration-500 montserrat"
                 style={{ backgroundColor: "#2a1914" }}
               >
-                <span className="mr-3">
-                  Explore Signature Gifting Solutions
-                </span>
+                <span className="mr-3">Explore Gifting Solutions</span>
                 <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform duration-300" />
               </Link>
             </div>

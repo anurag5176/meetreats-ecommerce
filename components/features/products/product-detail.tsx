@@ -46,6 +46,7 @@ const pairingOptions = [
 export function ProductDetail({ product }: ProductDetailProps) {
   const [selectedImage, setSelectedImage] = useState(0);
   const [showPricePer100g, setShowPricePer100g] = useState(false);
+  const [showDescription, setShowDescription] = useState(false);
   const { addItem, updateQuantity, items } = useCart();
   const { toast } = useToast();
 
@@ -133,9 +134,17 @@ export function ProductDetail({ product }: ProductDetailProps) {
             >
               {product.name}
             </h1>
-            <p className="montserrat text-lg text-charcoal/90 font">
+            <button
+              onClick={() => setShowDescription(!showDescription)}
+              className="text-left w-full montserrat text-lg text-charcoal/90 font hover:text-charcoal cursor-pointer transition-colors duration-200"
+            >
               {product.shortDescription}
-            </p>
+            </button>
+            {showDescription && product.description && (
+              <p className="mt-3 montserrat text-base text-charcoal/80 leading-relaxed">
+                {product.description}
+              </p>
+            )}
             <div className="mt-4 h-px bg-gradient-to-r from-transparent via-royal-gold/40 to-transparent" />
           </div>
 
