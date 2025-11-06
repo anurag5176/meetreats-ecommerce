@@ -47,7 +47,11 @@ export function FloatingButtons() {
           onClick={handleCartClick}
           className="relative rounded-full shadow-lg text-white transition-all duration-300 hover:scale-105 active:scale-95 flex items-center justify-center w-12 h-12 focus:outline-none focus:ring-2 focus:ring-royal-gold/50 focus:ring-offset-2 touch-manipulation hover:opacity-90"
           style={{ backgroundColor: "#2a1914" }}
-          aria-label={`View shopping cart${totalItems > 0 ? ` with ${totalItems} item${totalItems !== 1 ? 's' : ''}` : ''}`}
+          aria-label={`View shopping cart${
+            totalItems > 0
+              ? ` with ${totalItems} item${totalItems !== 1 ? "s" : ""}`
+              : ""
+          }`}
           tabIndex={0}
         >
           <ShoppingCart className="h-5 w-5" />
@@ -78,13 +82,13 @@ export function FloatingButtons() {
                   href="mailto:support@meetreats.com"
                   className="block montserrat text-sm text-royal-gold hover:underline"
                 >
-                  📧 support@meetreats.com
+                  📧 hello@meetreats.com
                 </a>
                 <a
                   href="tel:+911234567890"
                   className="block montserrat text-sm text-royal-gold hover:underline"
                 >
-                  📞 +91 123 456 7890
+                  📞 +91 98765 43210
                 </a>
               </div>
             </div>
@@ -109,4 +113,3 @@ export function FloatingButtons() {
     </>
   );
 }
-
