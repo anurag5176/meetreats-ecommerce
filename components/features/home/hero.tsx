@@ -27,7 +27,7 @@ export function Hero() {
               <span className="text-royal-gold/90 hover:text-royal-gold transition-colors duration-500">
                 Handcrafted indulgence, refined with science and soul.
               </span>
-            </h1>
+          </h1>
 
             {/* Sub-headline - Reduced size, left aligned */}
             <p
@@ -40,7 +40,7 @@ hover:text-charcoal/90 transition-colors duration-500 cursor-default"
             >
               Artisanal activated nuts and slow-dehydrated fruits — crafted with
               clean ingredients and quiet precision.
-            </p>
+          </p>
 
             {/* CTA Buttons - Left aligned, reduced size */}
             <div className="flex flex-col sm:flex-row gap-3 sm:gap-8 justify-start items-start animate-fade-in-up animate-delay-400">
@@ -51,23 +51,23 @@ hover:text-charcoal/90 transition-colors duration-500 cursor-default"
                 className="text-soft-cream hover:text-soft-cream hover:scale-105 transition-transform duration-500 px-4 sm:px-8 py-2.5 sm:py-4 text-sm sm:text-base w-auto sm:w-auto font-light tracking-wider border-0 rounded-none montserrat"
                 style={{ backgroundColor: "#2a1914" }}
               >
-                <Link href="/products">
+              <Link href="/products">
                   Explore Collection
                   <ArrowRight className="ml-2 h-4 w-4" />
-                </Link>
-              </Button>
+              </Link>
+            </Button>
 
-              <Button
-                size="lg"
-                variant="outline"
-                asChild
+            <Button
+              size="lg"
+              variant="outline"
+              asChild
                 className="border border-charcoal/30 text-charcoal hover:text-soft-cream hover:bg-[#2a1914] transition-all duration-500 px-4 sm:px-10 py-2.5 sm:py-5 text-sm sm:text-lg w-auto sm:w-auto font-light tracking-wider rounded-none bg-transparent hover:scale-105 montserrat"
-              >
-                <Link href="/corporate">
-                  Corporate Gifting
+            >
+                <Link href="/gifting">
+                Corporate Gifting
                   <ArrowRight className="ml-2 h-4 w-4" />
-                </Link>
-              </Button>
+              </Link>
+            </Button>
             </div>
           </div>
         </div>

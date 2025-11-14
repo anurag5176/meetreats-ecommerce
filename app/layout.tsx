@@ -3,9 +3,7 @@ import type { Metadata } from "next"
 import { Inter, Fraunces, Space_Grotesk, Playfair_Display, Montserrat, Cormorant_Garamond } from "next/font/google"
 import "./globals.css"
 import { Toaster } from "@/components/ui/toaster"
-import { Header } from "@/components/layout/header"
-import { Footer } from "@/components/layout/footer"
-import { FloatingButtons } from "@/components/layout/floating-buttons"
+import { ConditionalLayout } from "@/components/layout/conditional-layout"
 
 const inter = Inter({
   subsets: ["latin"],
@@ -88,10 +86,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${inter.variable} ${fraunces.variable} ${spaceGrotesk.variable} ${playfairDisplay.variable} ${montserrat.variable} ${cormorantGaramond.variable} antialiased`}>
       <body className="min-h-screen bg-soft-cream text-charcoal" style={{fontFamily: 'var(--font-montserrat), sans-serif'}}>
-        <Header />
-        <main className="flex-1">{children}</main>
-        <Footer />
-        <FloatingButtons />
+        <ConditionalLayout>{children}</ConditionalLayout>
         <Toaster />
       </body>
     </html>

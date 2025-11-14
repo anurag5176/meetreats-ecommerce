@@ -4,6 +4,7 @@ import type React from "react";
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import Script from "next/script";
 import {
   Dialog,
   DialogContent,
@@ -190,8 +191,10 @@ export function CheckoutDialog({ open, onOpenChange }: CheckoutDialogProps) {
   return (
     <>
       {/* Razorpay Script */}
-      if (typeof window !== "undefined"){" "}
-      {<script src="https://checkout.razorpay.com/v1/checkout.js" async />}
+      <Script
+        src="https://checkout.razorpay.com/v1/checkout.js"
+        strategy="lazyOnload"
+      />
       <Dialog
         open={open}
         onOpenChange={onOpenChange}

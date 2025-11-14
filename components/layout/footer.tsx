@@ -13,13 +13,13 @@ export function Footer() {
           {/* Brand */}
           <div className="space-y-4 sm:space-y-6 sm:col-span-2 lg:col-span-1">
             <div className="flex flex-col space-y-3">
-              <div className="flex items-center">
-                <Image
-                  src="/meetreatslogo.png"
-                  alt="MeeTreats Logo"
+            <div className="flex items-center">
+              <Image
+                src="/meetreatslogo.png"
+                alt="MeeTreats Logo"
                   width={160}
                   height={80}
-                />
+              />
               </div>
               <p className="montserrat text-white/70 text-xs sm:text-sm italic">
                 For daily inspiration and mindful indulgence.
@@ -51,7 +51,7 @@ export function Footer() {
               </li>
               <li>
                 <Link
-                  href="/corporate"
+                  href="/gifting"
                   className="montserrat text-white/80 hover:text-royal-gold transition-all duration-300 hover:scale-105"
                 >
                   Corporate Gifting
@@ -76,7 +76,7 @@ export function Footer() {
               </li>
               <li>
                 <Link
-                  href="/corporate"
+                  href="/gifting"
                   className="text-white/80 hover:text-royal-gold transition-all duration-300 hover:scale-105"
                 >
                   Gifting

@@ -143,7 +143,7 @@ export function ProductDetail({ product }: ProductDetailProps) {
             {showDescription && product.description && (
               <p className="mt-3 montserrat text-base text-charcoal/80 leading-relaxed">
                 {product.description}
-              </p>
+            </p>
             )}
             <div className="mt-4 h-px bg-gradient-to-r from-transparent via-royal-gold/40 to-transparent" />
           </div>
@@ -272,7 +272,7 @@ export function ProductDetail({ product }: ProductDetailProps) {
                 asChild
                 className="montserrat border-gold-400 text-base text-foreground mb-2 font-bold"
               >
-                <Link href="/corporate">
+                <Link href="/gifting">
                   Get Corporate Quote
                   <ExternalLink className="h-4 w-4 ml-1" />
                 </Link>

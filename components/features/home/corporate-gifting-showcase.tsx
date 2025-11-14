@@ -74,7 +74,7 @@ export function CorporateGiftingShowcase() {
             {/* Premium CTA Button */}
             <div className="pt-4">
               <Link
-                href="/corporate"
+                href="/gifting"
                 className="group inline-flex items-center justify-center px-10 sm:px-12 py-4 sm:py-5 text-base sm:text-lg w-full sm:w-auto font-light tracking-wider border-0 rounded-none text-white hover:shadow-lg transition-all duration-500 montserrat"
                 style={{ backgroundColor: "#2a1914" }}
               >

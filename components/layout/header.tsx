@@ -14,7 +14,7 @@ import { useCartAnimation } from "@/lib/hooks/use-cart-animation";
 const leftNavigation = [
   // { name: "HOME", href: "/" },
   { name: "PRODUCTS", href: "/products" },
-  { name: "GIFTING", href: "/corporate" },
+  { name: "GIFTING", href: "/gifting" },
 ];
 
 const rightNavigation = [
@@ -75,17 +75,17 @@ export function Header() {
             {rightNavigation.map((item) => {
               const isActive = pathname === item.href;
               return (
-                <Link
-                  key={item.name}
-                  href={item.href}
+              <Link
+                key={item.name}
+                href={item.href}
                   className={`montserrat text-sm lg:text-base font-medium transition-all duration-300 hover:scale-105 uppercase tracking-wider relative ${
                     isActive
                       ? "text-royal-gold border-b-2 border-royal-gold pb-1"
                       : "text-white hover:text-royal-gold"
                   }`}
-                >
-                  {item.name}
-                </Link>
+              >
+                {item.name}
+              </Link>
               );
             })}
           </nav>
