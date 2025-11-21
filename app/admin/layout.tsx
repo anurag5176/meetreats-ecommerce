@@ -144,8 +144,8 @@ export default function AdminLayout({
         </div>
       </aside>
 
-      {/* Mobile Header */}
-      <header className="lg:hidden fixed top-0 left-0 right-0 bg-white border-b border-royal-gold/20 shadow-sm z-30">
+      {/* Mobile Header - Only visible on mobile, hidden on desktop */}
+      <header className="block lg:hidden fixed top-0 left-0 right-0 bg-white border-b border-royal-gold/20 shadow-sm z-30">
         <div className="flex items-center justify-between p-4">
           <h1 className="cormorant-garamond text-xl font-semibold text-dark-chocolate">
             MeeTreats Admin

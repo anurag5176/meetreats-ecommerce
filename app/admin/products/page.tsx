@@ -255,15 +255,31 @@ export default function ProductsPage() {
 
   const handleStockToggle = async (product: Product) => {
     try {
+      const newStockStatus = !product.in_stock;
+      
+      // Optimistically update UI
+      setProducts(products.map(p => 
+        p.id === product.id ? { ...p, in_stock: newStockStatus } : p
+      ));
+
       const { error } = await supabase
         .from("products")
-        .update({ in_stock: !product.in_stock })
+        .update({ in_stock: newStockStatus })
         .eq("id", product.id);
 
-      if (error) throw error;
+      if (error) {
+        // Revert on error
+        setProducts(products.map(p => 
+          p.id === product.id ? { ...p, in_stock: product.in_stock } : p
+        ));
+        throw error;
+      }
+      
+      // Refresh to ensure consistency
       fetchProducts();
     } catch (error) {
       console.error("Error updating stock status:", error);
+      alert("Failed to update stock status. Please try again.");
     }
   };
 
@@ -339,7 +355,7 @@ export default function ProductsPage() {
               Add Product
             </Button>
           </DialogTrigger>
-          <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto bg-soft-cream">
+          <DialogContent className="max-w-2xl max-h-[95vh] overflow-y-auto bg-soft-cream mx-4 my-4">
             <DialogHeader>
               <DialogTitle className="cormorant-garamond text-2xl font-semibold text-dark-chocolate">
                 {editingProduct ? "Edit Product" : "Add New Product"}
@@ -541,13 +557,11 @@ export default function ProductsPage() {
                   <div className="mt-3">
                     <p className="montserrat text-xs text-charcoal/70 mb-2">Preview:</p>
                     <div className="relative w-full h-48 border border-royal-gold/20 rounded-lg overflow-hidden bg-royal-gold/5">
-                      {!imageError ? (
-                        <Image
+                      {!imageError && formData.image_url ? (
+                        <img
                           src={formData.image_url}
                           alt="Product preview"
-                          fill
-                          className="object-contain"
-                          unoptimized
+                          className="w-full h-full object-contain"
                           onError={() => setImageError(true)}
                           onLoad={() => setImageError(false)}
                         />
@@ -751,19 +765,23 @@ export default function ProductsPage() {
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {filteredProducts.map((product) => (
           <Card key={product.id} className="bg-white/80 backdrop-blur-sm border border-royal-gold/20 hover:shadow-xl transition-all duration-300">
-            <div className="relative h-48 w-full overflow-hidden rounded-t-lg">
+            <div className="relative h-48 w-full overflow-hidden rounded-t-lg bg-royal-gold/10">
               {product.image_url ? (
-                <Image
+                <img
                   src={product.image_url}
                   alt={product.name}
-                  fill
-                  className="object-cover"
+                  className="w-full h-full object-cover"
+                  onError={(e) => {
+                    const target = e.target as HTMLImageElement;
+                    target.style.display = 'none';
+                    const placeholder = target.nextElementSibling as HTMLElement;
+                    if (placeholder) placeholder.style.display = 'flex';
+                  }}
                 />
-              ) : (
-                <div className="w-full h-full bg-royal-gold/10 flex items-center justify-center">
-                  <Package className="h-16 w-16 text-royal-gold/30" />
-                </div>
-              )}
+              ) : null}
+              <div className={`w-full h-full flex items-center justify-center ${product.image_url ? 'hidden' : ''}`}>
+                <Package className="h-16 w-16 text-royal-gold/30" />
+              </div>
               <div className="absolute top-2 right-2">
                 <Badge
                   variant={product.in_stock ? "default" : "destructive"}
@@ -801,12 +819,12 @@ export default function ProductsPage() {
                 <span className="montserrat text-xs text-charcoal/60">Available:</span>
                 <button
                   onClick={() => handleStockToggle(product)}
-                  className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
+                  className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors duration-300 ${
                     product.in_stock ? "bg-royal-gold" : "bg-gray-300"
                   }`}
                 >
                   <span
-                    className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
+                    className={`inline-block h-4 w-4 rounded-full bg-white transition-all duration-300 ease-in-out ${
                       product.in_stock ? "translate-x-6" : "translate-x-1"
                     }`}
                   />

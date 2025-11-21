@@ -7,10 +7,12 @@ import { FloatingButtons } from "@/components/layout/floating-buttons";
 
 export function ConditionalLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
-  const isAdminRoute = typeof window !== "undefined" && pathname?.startsWith("/admin");
+  
+  // Check if it's an admin route - works immediately
+  const isAdminRoute = pathname?.startsWith("/admin");
 
   if (isAdminRoute) {
-    // Admin routes don't show Header/Footer
+    // Admin routes don't show Header/Footer - NO HEADER AT ALL
     return <>{children}</>;
   }
 

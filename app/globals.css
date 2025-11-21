@@ -75,15 +75,15 @@ h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-montserrat), sans-serif;
 }
 
-/* Ensure header and logo are always visible on initial load */
-header {
+/* Ensure header and logo are always visible on initial load - Only for main site header */
+header[class*="sticky"] {
   opacity: 1 !important;
   visibility: visible !important;
   display: block !important;
 }
 
-header img[alt*="Logo"],
-header img[alt*="logo"] {
+header[class*="sticky"] img[alt*="Logo"],
+header[class*="sticky"] img[alt*="logo"] {
   opacity: 1 !important;
   visibility: visible !important;
   display: block !important;
@@ -367,38 +367,13 @@ header img[alt*="logo"] {
   -webkit-font-smoothing: subpixel-antialiased;
 }
 
-/* Smooth hover effects - Global optimization */
-[class*="hover:"] {
+/* Smooth hover effects - Only apply to hover states, not all elements */
+a:hover,
+button:hover,
+[class*="hover:"]:hover {
   transition-property: transform, opacity, color, background-color, border-color, box-shadow;
   transition-duration: 0.3s;
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-/* Optimize all transforms */
-[class*="scale"],
-[class*="translate"],
-[class*="rotate"] {
-  will-change: transform;
-  transform: translateZ(0);
-  backface-visibility: hidden;
-}
-
-/* Global smooth transition optimization */
-* {
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-/* Ensure all duration classes use smooth easing */
-[class*="duration-"] {
-  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1) !important;
-}
-
-/* Optimize scroll reveal animations */
-[class*="opacity-0"][class*="translate"] {
-  will-change: transform, opacity;
-  transform: translate3d(0, 0, 0);
-  backface-visibility: hidden;
 }
 
 /* Smooth page transitions - Optimized */
@@ -419,16 +394,10 @@ header img[alt*="logo"] {
   transform: translateZ(0);
 }
 
-/* Smooth link transitions - Optimized */
-a, button {
-  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
-              opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1),
-              color 0.3s cubic-bezier(0.4, 0, 0.2, 1),
-              background-color 0.3s cubic-bezier(0.4, 0, 0.2, 1),
-              border-color 0.3s cubic-bezier(0.4, 0, 0.2, 1),
-              box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  will-change: transform;
-  transform: translateZ(0);
+/* Smooth link transitions - Only apply to links, not buttons */
+a {
+  transition: color 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+              opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 /* Improve scroll performance */
