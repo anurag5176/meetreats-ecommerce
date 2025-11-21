@@ -90,15 +90,21 @@ export function ProductDetail({ product }: ProductDetailProps) {
         {/* Product Images */}
         <div className="space-y-4 lg:sticky lg:top-24 self-start">
           <div className="aspect-square relative overflow-hidden rounded-lg bg-card">
-            <Image
-              src={
-                product.images[selectedImage] ||
-                `/placeholder.svg?height=600&width=600&query=${product.name}`
-              }
-              alt={product.name}
-              fill
-              className="object-cover"
-            />
+            {product.images[selectedImage] ? (
+              <img
+                src={product.images[selectedImage]}
+                alt={product.name}
+                className="w-full h-full object-cover"
+                onError={(e) => {
+                  const target = e.target as HTMLImageElement;
+                  target.src = `/placeholder.svg?height=600&width=600&query=${product.name}`;
+                }}
+              />
+            ) : (
+              <div className="w-full h-full flex items-center justify-center bg-royal-gold/10">
+                <span className="text-charcoal/40">No image available</span>
+              </div>
+            )}
           </div>
 
           {product.images.length > 1 && (
@@ -113,11 +119,14 @@ export function ProductDetail({ product }: ProductDetailProps) {
                       : "border-border hover:border-royal-gold/60"
                   }`}
                 >
-                  <Image
+                  <img
                     src={image || "/placeholder.svg"}
                     alt={`${product.name} ${index + 1}`}
-                    fill
-                    className="object-cover"
+                    className="w-full h-full object-cover"
+                    onError={(e) => {
+                      const target = e.target as HTMLImageElement;
+                      target.src = "/placeholder.svg";
+                    }}
                   />
                 </button>
               ))}
