@@ -10,9 +10,12 @@ export function useScrollReveal(threshold = 0.1, delay = 0) {
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
-          setTimeout(() => {
-            setIsVisible(true)
-          }, delay)
+          // Use requestAnimationFrame for smoother animation trigger
+          requestAnimationFrame(() => {
+            setTimeout(() => {
+              setIsVisible(true)
+            }, delay)
+          })
         }
       },
       {
@@ -21,13 +24,14 @@ export function useScrollReveal(threshold = 0.1, delay = 0) {
       }
     )
 
-    if (ref.current) {
-      observer.observe(ref.current)
+    const currentRef = ref.current
+    if (currentRef) {
+      observer.observe(currentRef)
     }
 
     return () => {
-      if (ref.current) {
-        observer.unobserve(ref.current)
+      if (currentRef) {
+        observer.unobserve(currentRef)
       }
     }
   }, [threshold, delay])

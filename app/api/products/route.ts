@@ -1,5 +1,8 @@
 import { type NextRequest, NextResponse } from "next/server"
-import { getAllProducts } from "@/lib/data/products"
+import { getAllProducts, getProductsByCategory } from "@/lib/data/products"
+
+// Cache API responses for 60 seconds
+export const revalidate = 60
 
 export async function GET(request: NextRequest) {
   try {
@@ -8,8 +11,10 @@ export async function GET(request: NextRequest) {
     const search = searchParams.get("search")
     const sort = searchParams.get("sort")
 
-    // Fetch products from Supabase (or fallback to static data)
-    let filteredProducts = await getAllProducts()
+    // Optimize: fetch by category directly if specified
+    let filteredProducts = category && category !== "all" 
+      ? await getProductsByCategory(category)
+      : await getAllProducts()
 
     // Filter by category
     if (category && category !== "all") {

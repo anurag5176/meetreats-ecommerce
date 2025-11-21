@@ -1,5 +1,6 @@
 import type { Product, Batch } from "@/lib/types"
 import { supabaseServer } from "@/lib/supabase/server"
+import { cache } from "react"
 
 // Mock product data - in production this would come from Sanity CMS
 export const products: Product[] = [
@@ -184,12 +185,26 @@ export const batches: Batch[] = [
   },
 ]
 
-// Helper function to parse JSON array string to array
+// Cache for parsed JSON arrays to avoid re-parsing
+const jsonArrayCache = new Map<string, string[]>();
+
+// Helper function to parse JSON array string to array (with caching)
 function parseJsonArray(jsonStr: string | null | undefined): string[] {
   if (!jsonStr) return [];
+  
+  // Check cache first
+  if (jsonArrayCache.has(jsonStr)) {
+    return jsonArrayCache.get(jsonStr)!;
+  }
+  
   try {
     const parsed = JSON.parse(jsonStr);
-    return Array.isArray(parsed) ? parsed : [];
+    const result = Array.isArray(parsed) ? parsed : [];
+    // Cache the result
+    if (jsonStr.length < 1000) { // Only cache small strings to avoid memory issues
+      jsonArrayCache.set(jsonStr, result);
+    }
+    return result;
   } catch {
     return [];
   }
@@ -220,14 +235,16 @@ function transformSupabaseProduct(dbProduct: any): Product {
   }
 }
 
-export async function getAllProducts(): Promise<Product[]> {
+// Cached version of getAllProducts for React Server Components
+export const getAllProducts = cache(async (): Promise<Product[]> => {
   try {
-    // Try to fetch from Supabase first
+    // Optimized query: only select needed columns and use index
     const { data, error } = await supabaseServer
       .from("products")
-      .select("*")
+      .select("id, name, slug, description, short_description, category, price, weight, image_url, ingredients, process_notes, storage, allergens, nutrition_pdf, badges, bullets, is_provisional_nutrition, in_stock, featured, created_at")
       .eq("in_stock", true)
       .order("created_at", { ascending: false })
+      .limit(1000) // Safety limit
 
     if (error) {
       console.error("Error fetching products from Supabase:", error)
@@ -247,19 +264,48 @@ export async function getAllProducts(): Promise<Product[]> {
     // Fallback to static data
     return products
   }
-}
+})
 
-export async function getFeaturedProducts(): Promise<Product[]> {
-  const allProducts = await getAllProducts()
-  return allProducts.filter((product) => product.featured)
-}
-
-export async function getProductBySlug(slug: string): Promise<Product | null> {
+// Optimized featured products query - fetch directly from DB
+export const getFeaturedProducts = cache(async (): Promise<Product[]> => {
   try {
-    // Try to fetch from Supabase first
+    // Direct query for featured products using index
     const { data, error } = await supabaseServer
       .from("products")
-      .select("*")
+      .select("id, name, slug, description, short_description, category, price, weight, image_url, ingredients, process_notes, storage, allergens, nutrition_pdf, badges, bullets, is_provisional_nutrition, in_stock, featured, created_at")
+      .eq("in_stock", true)
+      .eq("featured", true)
+      .order("created_at", { ascending: false })
+      .limit(100)
+
+    if (error) {
+      console.error("Error fetching featured products from Supabase:", error)
+      // Fallback to filtering all products
+      const allProducts = await getAllProducts()
+      return allProducts.filter((product) => product.featured)
+    }
+
+    if (data && data.length > 0) {
+      return data.map(transformSupabaseProduct)
+    }
+
+    // Fallback
+    const allProducts = await getAllProducts()
+    return allProducts.filter((product) => product.featured)
+  } catch (error) {
+    console.error("Error in getFeaturedProducts:", error)
+    const allProducts = await getAllProducts()
+    return allProducts.filter((product) => product.featured)
+  }
+})
+
+// Cached and optimized product by slug
+export const getProductBySlug = cache(async (slug: string): Promise<Product | null> => {
+  try {
+    // Optimized query using slug index
+    const { data, error } = await supabaseServer
+      .from("products")
+      .select("id, name, slug, description, short_description, category, price, weight, image_url, ingredients, process_notes, storage, allergens, nutrition_pdf, badges, bullets, is_provisional_nutrition, in_stock, featured, created_at")
       .eq("slug", slug)
       .single()
 
@@ -283,12 +329,40 @@ export async function getProductBySlug(slug: string): Promise<Product | null> {
     const allProducts = await getAllProducts()
     return allProducts.find((product) => product.slug === slug) || null
   }
-}
+})
 
-export async function getProductsByCategory(category: string): Promise<Product[]> {
-  const allProducts = await getAllProducts()
-  return allProducts.filter((product) => product.category === category)
-}
+// Optimized category query - fetch directly from DB
+export const getProductsByCategory = cache(async (category: string): Promise<Product[]> => {
+  try {
+    // Direct query using category index
+    const { data, error } = await supabaseServer
+      .from("products")
+      .select("id, name, slug, description, short_description, category, price, weight, image_url, ingredients, process_notes, storage, allergens, nutrition_pdf, badges, bullets, is_provisional_nutrition, in_stock, featured, created_at")
+      .eq("in_stock", true)
+      .eq("category", category)
+      .order("created_at", { ascending: false })
+      .limit(1000)
+
+    if (error) {
+      console.error("Error fetching products by category from Supabase:", error)
+      // Fallback to filtering all products
+      const allProducts = await getAllProducts()
+      return allProducts.filter((product) => product.category === category)
+    }
+
+    if (data && data.length > 0) {
+      return data.map(transformSupabaseProduct)
+    }
+
+    // Fallback
+    const allProducts = await getAllProducts()
+    return allProducts.filter((product) => product.category === category)
+  } catch (error) {
+    console.error("Error in getProductsByCategory:", error)
+    const allProducts = await getAllProducts()
+    return allProducts.filter((product) => product.category === category)
+  }
+})
 
 export async function getBatchByProductId(productId: string): Promise<Batch | null> {
   return batches.find((batch) => batch.productId === productId) || null

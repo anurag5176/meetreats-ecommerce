@@ -85,7 +85,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={`${inter.variable} ${fraunces.variable} ${spaceGrotesk.variable} ${playfairDisplay.variable} ${montserrat.variable} ${cormorantGaramond.variable} antialiased`}>
-      <body className="min-h-screen bg-soft-cream text-charcoal" style={{fontFamily: 'var(--font-montserrat), sans-serif'}}>
+      <body className="min-h-screen bg-soft-cream text-charcoal transition-colors duration-300" style={{fontFamily: 'var(--font-montserrat), sans-serif'}}>
         <ConditionalLayout>{children}</ConditionalLayout>
         <Toaster />
       </body>

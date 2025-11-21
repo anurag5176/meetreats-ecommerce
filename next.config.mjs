@@ -8,7 +8,13 @@ const nextConfig = {
   },
   images: {
     unoptimized: true,
+    formats: ['image/avif', 'image/webp'],
   },
+  // Performance optimizations
+  compress: true,
+  poweredByHeader: false,
+  reactStrictMode: true,
+  swcMinify: true,
 }
 
 export default nextConfig

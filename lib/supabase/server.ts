@@ -12,7 +12,21 @@ export const supabaseServer = createClient(supabaseUrl, supabaseAnonKey, {
   auth: {
     autoRefreshToken: false,
     persistSession: false
-  }
+  },
+  db: {
+    schema: 'public',
+  },
+  global: {
+    headers: {
+      'x-client-info': 'meetreats-web',
+    },
+  },
+  // Performance optimizations
+  realtime: {
+    params: {
+      eventsPerSecond: 2,
+    },
+  },
 })
 
 

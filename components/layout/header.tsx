@@ -31,8 +31,8 @@ export function Header() {
 
   return (
     <header
-      className="sticky top-0 z-50 w-full border-b border-royal-gold/20"
-      style={{ backgroundColor: "#2a1914" }}
+      className="sticky top-0 z-50 w-full border-b border-royal-gold/20 opacity-100"
+      style={{ backgroundColor: "#2a1914", opacity: 1 }}
     >
       <div className="container mx-auto px-3 sm:px-6 lg:px-8">
         <div className="flex h-20 sm:h-24 items-center justify-between">
@@ -59,14 +59,17 @@ export function Header() {
           {/* Logo - Center */}
           <Link
             href="/"
-            className="flex items-center flex-shrink-0 mt-[1px] sm:-mt-4 hover:scale-105 transition-transform duration-500 ease-out"
+            className="flex items-center flex-shrink-0 mt-[1px] sm:-mt-4 hover:scale-105 transition-transform duration-500 ease-out z-10 relative"
           >
             <Image
               src="/meetreatslogo.png"
               alt="MeeTreats Logo"
               width={160}
               height={100}
-              className="hover:drop-shadow-lg transition-all duration-500"
+              className="hover:drop-shadow-lg transition-all duration-500 opacity-100"
+              priority
+              unoptimized
+              style={{ opacity: 1 }}
             />
           </Link>
 
