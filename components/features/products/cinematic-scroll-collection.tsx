@@ -5,7 +5,6 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { useCart } from "@/lib/hooks/use-cart";
 import { ArrowRight, ShoppingCart, Instagram } from "lucide-react";
-import { getAllProducts } from "@/lib/data/products";
 import type { Product } from "@/lib/types";
 import {
   Select,
@@ -55,9 +54,21 @@ export function CinematicScrollCollection() {
   // Fetch products on mount
   useEffect(() => {
     const loadProducts = async () => {
-      const products = await getAllProducts();
-      const transformed = products.map(transformProduct);
-      setAllProducts(transformed);
+      try {
+        // Fetch from API route (which uses Supabase)
+        const response = await fetch("/api/products");
+        const result = await response.json();
+        if (result.success && result.data) {
+          const transformed = result.data.map(transformProduct);
+          setAllProducts(transformed);
+        } else {
+          console.error("Failed to fetch products from API");
+          setAllProducts([]);
+        }
+      } catch (error) {
+        console.error("Error loading products:", error);
+        setAllProducts([]);
+      }
     };
     loadProducts();
   }, []);

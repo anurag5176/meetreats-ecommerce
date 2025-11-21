@@ -36,12 +36,22 @@ CREATE TABLE IF NOT EXISTS products (
     name VARCHAR(255) NOT NULL,
     slug VARCHAR(255) UNIQUE NOT NULL,
     description TEXT,
+    short_description TEXT,
     category VARCHAR(100) NOT NULL,
     price DECIMAL(10,2) NOT NULL,
     weight INTEGER NOT NULL,
     stock INTEGER,
     in_stock BOOLEAN DEFAULT true,
     image_url VARCHAR(500),
+    ingredients TEXT,
+    process_notes TEXT,
+    storage TEXT,
+    allergens TEXT,
+    nutrition_pdf VARCHAR(500),
+    badges TEXT,
+    bullets TEXT,
+    is_provisional_nutrition BOOLEAN DEFAULT false,
+    featured BOOLEAN DEFAULT false,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
@@ -74,6 +84,32 @@ CREATE POLICY "Admin can delete products" ON products FOR DELETE USING (true);
 
 CREATE POLICY "Admin can read orders" ON orders FOR SELECT USING (true);
 CREATE POLICY "Admin can update orders" ON orders FOR UPDATE USING (true);
+```
+
+### 2.1. Update Existing Products Table (If Already Created)
+
+If you already have a products table, run this migration to add the new columns:
+
+```sql
+-- Run scripts/003-add-product-details-columns.sql
+-- Or copy the SQL from that file into Supabase SQL Editor
+```
+
+**Or run this SQL directly:**
+
+```sql
+-- Add new columns to products table
+ALTER TABLE products 
+ADD COLUMN IF NOT EXISTS short_description TEXT,
+ADD COLUMN IF NOT EXISTS ingredients TEXT,
+ADD COLUMN IF NOT EXISTS process_notes TEXT,
+ADD COLUMN IF NOT EXISTS storage TEXT,
+ADD COLUMN IF NOT EXISTS allergens TEXT,
+ADD COLUMN IF NOT EXISTS nutrition_pdf VARCHAR(500),
+ADD COLUMN IF NOT EXISTS badges TEXT,
+ADD COLUMN IF NOT EXISTS bullets TEXT,
+ADD COLUMN IF NOT EXISTS is_provisional_nutrition BOOLEAN DEFAULT false,
+ADD COLUMN IF NOT EXISTS featured BOOLEAN DEFAULT false;
 ```
 
 ### 3. Set Up Authentication

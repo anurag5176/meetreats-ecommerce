@@ -138,7 +138,7 @@ export function ProductDetail({ product }: ProductDetailProps) {
               onClick={() => setShowDescription(!showDescription)}
               className="text-left w-full montserrat text-lg text-charcoal/90 font hover:text-charcoal cursor-pointer transition-colors duration-200"
             >
-              {product.shortDescription}
+              {product.shortDescription || (product.description ? `${product.description.substring(0, 100)}...` : '')}
             </button>
             {showDescription && product.description && (
               <p className="mt-3 montserrat text-base text-charcoal/80 leading-relaxed">
@@ -289,33 +289,45 @@ export function ProductDetail({ product }: ProductDetailProps) {
           <AccordionItem value="ingredients">
             <AccordionTrigger className="montserrat">Ingredients</AccordionTrigger>
             <AccordionContent>
-              <ul className="list-disc list-inside space-y-1">
-                {product.ingredients.map((ingredient, index) => (
-                  <li key={index} className="montserrat text-muted-foreground">
-                    {ingredient}
-                  </li>
-                ))}
-              </ul>
+              {product.ingredients && product.ingredients.length > 0 ? (
+                <ul className="list-disc list-inside space-y-1">
+                  {product.ingredients.map((ingredient, index) => (
+                    <li key={index} className="montserrat text-muted-foreground">
+                      {ingredient}
+                    </li>
+                  ))}
+                </ul>
+              ) : (
+                <p className="montserrat text-muted-foreground">Ingredients information will be available soon.</p>
+              )}
             </AccordionContent>
           </AccordionItem>
 
           <AccordionItem value="process">
             <AccordionTrigger className="montserrat">Our Process</AccordionTrigger>
             <AccordionContent>
-              <div className="space-y-2">
-                {product.processNotes.map((note, index) => (
-                  <p key={index} className="montserrat text-muted-foreground">
-                    • {note}
-                  </p>
-                ))}
-              </div>
+              {product.processNotes && product.processNotes.length > 0 ? (
+                <div className="space-y-2">
+                  {product.processNotes.map((note, index) => (
+                    <p key={index} className="montserrat text-muted-foreground">
+                      • {note}
+                    </p>
+                  ))}
+                </div>
+              ) : (
+                <p className="montserrat text-muted-foreground">Process information will be available soon.</p>
+              )}
             </AccordionContent>
           </AccordionItem>
 
           <AccordionItem value="storage">
             <AccordionTrigger className="montserrat">Storage & Shelf Life</AccordionTrigger>
             <AccordionContent>
-              <p className="montserrat text-muted-foreground">{product.storage}</p>
+              {product.storage ? (
+                <p className="montserrat text-muted-foreground">{product.storage}</p>
+              ) : (
+                <p className="montserrat text-muted-foreground">Storage information will be available soon.</p>
+              )}
             </AccordionContent>
           </AccordionItem>
 

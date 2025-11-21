@@ -1,4 +1,5 @@
 import type { Product, Batch } from "@/lib/types"
+import { supabaseServer } from "@/lib/supabase/server"
 
 // Mock product data - in production this would come from Sanity CMS
 export const products: Product[] = [
@@ -183,9 +184,69 @@ export const batches: Batch[] = [
   },
 ]
 
+// Helper function to parse JSON array string to array
+function parseJsonArray(jsonStr: string | null | undefined): string[] {
+  if (!jsonStr) return [];
+  try {
+    const parsed = JSON.parse(jsonStr);
+    return Array.isArray(parsed) ? parsed : [];
+  } catch {
+    return [];
+  }
+}
+
+// Transform Supabase product to frontend Product format
+function transformSupabaseProduct(dbProduct: any): Product {
+  return {
+    id: dbProduct.id.toString(),
+    slug: dbProduct.slug || dbProduct.name.toLowerCase().replace(/\s+/g, "-"),
+    name: dbProduct.name,
+    category: dbProduct.category as "activated-almonds" | "dehydrated-fruits" | "gifting",
+    priceINR: dbProduct.price || 0,
+    weightGrams: dbProduct.weight || 0,
+    shortDescription: dbProduct.short_description || dbProduct.description || "",
+    description: dbProduct.description || "",
+    bullets: parseJsonArray(dbProduct.bullets),
+    images: dbProduct.image_url ? [dbProduct.image_url] : [], // Convert image_url to images array
+    badges: parseJsonArray(dbProduct.badges),
+    ingredients: parseJsonArray(dbProduct.ingredients),
+    processNotes: parseJsonArray(dbProduct.process_notes),
+    storage: dbProduct.storage || "",
+    allergens: parseJsonArray(dbProduct.allergens),
+    nutritionPdf: dbProduct.nutrition_pdf || undefined,
+    isProvisionalNutrition: dbProduct.is_provisional_nutrition ?? false,
+    inStock: dbProduct.in_stock ?? true,
+    featured: dbProduct.featured ?? false,
+  }
+}
+
 export async function getAllProducts(): Promise<Product[]> {
-  // In production, this would fetch from Sanity CMS
-  return products
+  try {
+    // Try to fetch from Supabase first
+    const { data, error } = await supabaseServer
+      .from("products")
+      .select("*")
+      .eq("in_stock", true)
+      .order("created_at", { ascending: false })
+
+    if (error) {
+      console.error("Error fetching products from Supabase:", error)
+      // Fallback to static data if Supabase fails
+      return products
+    }
+
+    if (data && data.length > 0) {
+      // Transform Supabase products to frontend format
+      return data.map(transformSupabaseProduct)
+    }
+
+    // If no products in Supabase, fallback to static data
+    return products
+  } catch (error) {
+    console.error("Error in getAllProducts:", error)
+    // Fallback to static data
+    return products
+  }
 }
 
 export async function getFeaturedProducts(): Promise<Product[]> {
@@ -194,8 +255,34 @@ export async function getFeaturedProducts(): Promise<Product[]> {
 }
 
 export async function getProductBySlug(slug: string): Promise<Product | null> {
-  const allProducts = await getAllProducts()
-  return allProducts.find((product) => product.slug === slug) || null
+  try {
+    // Try to fetch from Supabase first
+    const { data, error } = await supabaseServer
+      .from("products")
+      .select("*")
+      .eq("slug", slug)
+      .single()
+
+    if (error) {
+      console.error("Error fetching product from Supabase:", error)
+      // Fallback to static data
+      const allProducts = await getAllProducts()
+      return allProducts.find((product) => product.slug === slug) || null
+    }
+
+    if (data) {
+      return transformSupabaseProduct(data)
+    }
+
+    // Fallback to static data
+    const allProducts = await getAllProducts()
+    return allProducts.find((product) => product.slug === slug) || null
+  } catch (error) {
+    console.error("Error in getProductBySlug:", error)
+    // Fallback to static data
+    const allProducts = await getAllProducts()
+    return allProducts.find((product) => product.slug === slug) || null
+  }
 }
 
 export async function getProductsByCategory(category: string): Promise<Product[]> {
